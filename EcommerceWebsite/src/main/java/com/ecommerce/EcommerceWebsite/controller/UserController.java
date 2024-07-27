@@ -38,7 +38,6 @@ public class UserController {
         userService.saveUser(newUser);
 
         model.addAttribute("message", "User registered successfully!");
-
         return "register";
     }
 
@@ -63,7 +62,7 @@ public class UserController {
                 return "login";
             }
         }catch (Exception e){
-            e.getMessage();
+            System.out.println("user not found");
         }finally {
             return "login";
         }
@@ -78,7 +77,7 @@ public class UserController {
     @GetMapping("/deleteaccount")
     public void deleteAccount(Long id,Model model){
         if(userService.deleteUser(id)){
-            model.addAttribute("message", "Account Deleted");
+            model.addAttribute("message", "Account Deleted Successfully");
         }else{
             model.addAttribute("message", "Cannot Delete Account Delete");
         }

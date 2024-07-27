@@ -23,10 +23,10 @@ public class UserService {
         return passwordEncoder.matches(plainPassword, hashedPassword);
     }
 
-    public User saveUser(User user) {
+    public void saveUser(User user) {
         String hashedpassword = hashPassword(user.getPassword());
         user.setPassword(hashedpassword);
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 //    public User updateUser(Long id,User user) {
 //        return userRepository.save(user);

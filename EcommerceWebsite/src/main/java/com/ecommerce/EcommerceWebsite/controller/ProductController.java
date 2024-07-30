@@ -1,52 +1,38 @@
 package com.ecommerce.EcommerceWebsite.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import com.ecommerce.EcommerceWebsite.model.Product;
-import com.ecommerce.EcommerceWebsite.service.ProductService;
-import org.springframework.web.bind.annotation.*;
+import com.ecommerce.EcommerceWebsite.repository.ProductRepository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 
 @Controller
 public class ProductController {
-    @Autowired
-    private ProductService productService;
 
-    @GetMapping("/products") 
-    public String viewProductPage(Model model) {
-        model.addAttribute("listProducts", productService.getAllProducts());
-        return "product/index";
+    private final ProductRepository productRepository;
+
+    // @Autowired
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
-    @GetMapping("/showNewProductForm")
-    public String showNewProductForm(Model model) {
-        // create model attribute to bind form data
-        Product product = new Product();
+    @GetMapping("/product")
+    public String showProducts(Model model) {
+        List<Product> products = productRepository.findAll(); // Retrieve products from the database
+        model.addAttribute("products", products);
+        return "product"; // Thymeleaf template name
+    }
+
+    @GetMapping("/product/{productId}")
+    public String viewProductDetails(@PathVariable int productId, Model model) {
+        Product product = productRepository.findById(productId).orElse(null);
         model.addAttribute("product", product);
-        return "product/new_product";
+        return "view_product"; // Thymeleaf template name
     }
 
-    @PostMapping("/saveProduct")
-    public String saveProduct(@ModelAttribute("product") Product product) {
-        productService.saveProduct(product);
-        return "redirect:/product";
-    }
-
-    @GetMapping("/productDetail/{id}")
-    public String productDetail(@PathVariable(value = "id") long id, Model model) {
-
-        Product product = productService.getProductById(id);
-
-        model.addAttribute("product", product);
-        return "product/product_detail";
-    }
-
-    // @GetMapping("/deleteProduct/{id}")
-    // public String deleteProduct(@PathVariable(value = "id") long id) {
-
-    //     return "redirect:/product";
-    // }
-    
 }

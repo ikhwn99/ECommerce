@@ -24,7 +24,7 @@ CREATE TABLE `product` (
   `stock` int NOT NULL,
   `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+)
 
 INSERT INTO `` (`id`,`category`,`description`,`discount`,`discount_price`,`image`,`is_active`,`price`,`stock`,`title`) VALUES (1,'Skincare','60ml x 1 botol',5,114,'1.png',1,120,100,'Skinzen Face Oil');
 INSERT INTO `` (`id`,`category`,`description`,`discount`,`discount_price`,`image`,`is_active`,`price`,`stock`,`title`) VALUES (2,'Skincare','Zinnia Magenta Facial Cleanser (100ml)',10,31.5,'2.png',1,35,100,'Zinnia Magenta');

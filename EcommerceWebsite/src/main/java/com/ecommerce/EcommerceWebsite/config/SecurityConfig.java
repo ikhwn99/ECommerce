@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,8 +35,11 @@ public class SecurityConfig {
                         .usernameParameter("email")
                         .permitAll()  // Allow everyone to access the login page
                 )
-                .logout(LogoutConfigurer::permitAll  // Allow everyone to log out
-                );
+                .logout(LogoutConfigurer::permitAll)
+                .sessionManagement(sessionManagement ->
+                        sessionManagement
+                                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // Create sessions if needed
+                );// Allow everyone to log out;
 
         return http.build();
     }

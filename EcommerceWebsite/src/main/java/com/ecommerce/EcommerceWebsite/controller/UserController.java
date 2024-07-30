@@ -51,6 +51,12 @@ public class UserController {
         }
         return "login";
     }
+
+    @GetMapping("/test")
+    public String test(Model model){
+        userService.getCurrentUserId();
+        return "/login";
+    }
 }
 
 

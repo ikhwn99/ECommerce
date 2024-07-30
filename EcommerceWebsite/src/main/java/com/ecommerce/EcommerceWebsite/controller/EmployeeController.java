@@ -13,7 +13,6 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    // display list of employees
     @GetMapping("/employee")
     public String viewHomePage(Model model) {
         model.addAttribute("listEmployees", employeeService.getAllEmployees());
@@ -49,7 +48,7 @@ public class EmployeeController {
     @GetMapping("/deleteEmployee/{id}")
     public String deleteEmployee(@PathVariable(value = "id") long id) {
 
-        // call delete employee method 
+        // call delete employee method
         this.employeeService.deleteEmployeeById(id);
         return "redirect:/employee";
     }

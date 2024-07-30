@@ -6,21 +6,50 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "user")
-@Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "user_table")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String email;
-    private String password;
-    private String address;
-    private int phone;
 
+    @Column(unique = true)
+    private String username;
+    private String password;
+    private String fullname;
+
+    public User(String username, String password, String fullname) {
+        super();
+        this.username = username;
+        this.password = password;
+        this.fullname = fullname;
+       }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", username=" + username + ", password=" + password + ", fullname=" + fullname + "]";
+    }
 }
+
+// @Table(name = "user")
+// @Entity
+// @Getter
+// @Setter
+// @AllArgsConstructor
+// @NoArgsConstructor
+// public class User {
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+//     private String name;
+//     private String email;
+//     private String password;
+//     private String address;
+//     private int phone;
+
+// }
 

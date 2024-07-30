@@ -10,12 +10,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
+    private String email;
     private String username;
     private String password;
     private String fullname;
+    private String address;
+    private int phone;
 
     @Override
     public String toString() {
-    return "UserDto [username=" + username + ", password=" + password + ", fullname=" + fullname + "]";
+    return "UserDto [username=" + username + ", email=" + email + ", password=" + password + ", fullname=" + fullname + "]";
     }
 }

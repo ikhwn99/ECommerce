@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- Base class for template (Header) -->
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-spring-security6" th:fragment="layout(content)">
 
 <head>
     <meta charset="UTF-8">
@@ -48,7 +48,7 @@
                     </li>
                 </ul>
                 <h1>SINI</h1>
-                <h3 th:inline="text">Welcome <span sec:authentication="principal.username"></span></h3>
+                <h3 th:inline="text">Welcome <span  sec:authorize="isAuthenticated()" sec:authentication="principal.user.name"></span></h3>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/login"><i

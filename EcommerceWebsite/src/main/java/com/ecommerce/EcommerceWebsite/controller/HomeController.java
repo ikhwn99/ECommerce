@@ -21,13 +21,13 @@ public class HomeController {
 //        return "register";
 //    }
 
-    @GetMapping("/product")
-    public String product(){
-        return "product";
-    }
-
-    @GetMapping("/view_product")
-    public String view_product(){
-        return "view_product";
-    }
+//    @GetMapping("/product")
+//    public String product(){
+//        return "product";
+//    }
+//
+//    @GetMapping("/view_product")
+//    public String view_product(){
+//        return "view_product";
+//    }
 }

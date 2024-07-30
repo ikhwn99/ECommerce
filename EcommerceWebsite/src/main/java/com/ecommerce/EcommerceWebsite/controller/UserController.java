@@ -51,6 +51,9 @@ public class UserController {
     @GetMapping("/test")
     public String test(Model model){
         userService.getCurrentUserId();
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        Object principal = auth.getPrincipal();
+//        System.out.println("Principal class: " + principal.getClass().getName());
         return "/login";
     }
 }

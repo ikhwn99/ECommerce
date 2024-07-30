@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -110,9 +110,9 @@
  </div>
 </body>
 
-</html>
+</html> -->
 
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
 
 <head>
@@ -143,68 +143,65 @@
                             </th:block>
                         </div>
                         <div class="card-body">
-                            <form action="/saveUser" enctype="multipart/form-data" method="post">
+                            <form th:action="@{/register}" enctype="multipart/form-data" method="post" role="form" th:object="${user}">
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <label class="form-label">Full Name</label> <input required class="form-control"
-                                            name="name" type="text">
+                                        <label class="form-label" for="fullname">Full Name</label> <input required th:field="*{fullname}" class="form-control" name="fullname" type="text">
                                     </div>
 
-                                    <div class="col">
+                                    <!-- <div class="col">
                                         <label class="form-label">Mobile Number</label> <input required
                                             class="form-control" name="mobileNumber" type="number">
-                                    </div>
+                                    </div> -->
 
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Email</label> <input required class="form-control"
-                                        name="email" type="email">
+                                    <label class="form-label" for="username">Username</label> <input required th:field="*{username}" class="form-control" name="username" type="text">
                                 </div>
 
-                                <div class="row mb-2">
-                                    <div class="col">
+                                <!-- <div class="row mb-2"> -->
+                                    <!-- <div class="col">
                                         <label class="form-label">Address</label> <input required class="form-control"
                                             name="address" type="text">
-                                    </div>
+                                    </div> -->
 
-                                    <div class="col">
+                                    <!-- <div class="col">
                                         <label class="form-label">City</label> <input required class="form-control"
                                             name="city" type="text">
-                                    </div>
+                                    </div> -->
 
-                                </div>
+                                <!-- </div> -->
 
-                                <div class="row mb-2">
+                                <!-- <div class="row mb-2">
                                     <div class="col">
                                         <label class="form-label">State</label> <input required class="form-control"
                                             name="state" type="text">
-                                    </div>
+                                    </div> -->
 
-                                    <div class="col">
+                                    <!-- <div class="col">
                                         <label class="form-label">Postcode</label> <input required class="form-control"
                                             name="pincode" type="number">
-                                    </div>
+                                    </div> -->
 
-                                </div>
+                                <!-- </div> -->
 
                                 <div class="row mb-2">
                                     <div class="col">
-                                        <label class="form-label">Password</label> <input required class="form-control"
-                                            name="password" type="password">
+                                        <label class="form-label" for="password">Password</label> <input required th:field="*{password}" class="form-control" name="password" type="password">
                                     </div>
 
-                                    <div class="col">
+                                    <!-- <div class="col">
                                         <label class="form-label">Confirm Password</label> <input required
                                             class="form-control" name="cpassword" type="password">
-                                    </div>
+                                    </div> -->
 
                                 </div>
 
-                                <div class="mb-3">
+                                <!-- <div class="mb-3">
                                     <label class="form-label">Profile Image</label> <input class="form-control"
                                         name="img" type="file">
-                                </div>
+                                </div> -->
 
                                 <button type="submit" class="btn bg-primary text-white col-md-12">Register</button>
                             </form>
@@ -212,7 +209,7 @@
 
                         <div class="card-footer text-center">
 
-                            have an account ? <a href="/login" class="text-decoration-none">Login
+                            have an account ? <a th:href="@{/login1}" class="text-decoration-none">Login
                             </a>
                         </div>
                     </div>
@@ -222,4 +219,4 @@
     </section>
 </body>
 
-</html> -->
+</html>

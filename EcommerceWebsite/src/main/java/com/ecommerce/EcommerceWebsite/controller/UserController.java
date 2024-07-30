@@ -28,7 +28,14 @@ public class UserController {
     public String home(Model model, Principal principal) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         model.addAttribute("userdetail", userDetails);
-        return "home";
+        return "index";
+    }
+
+    @GetMapping("/product")
+    public String product(Model model, Principal principal) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("userdetail", userDetails);
+        return "product";
     }
 
     @GetMapping("/login")
@@ -51,7 +58,7 @@ public class UserController {
             return "register";
         }
         userService.save(userDto);
-        return "redirect:/register?success";
+        return "redirect:/login";
     }
 }
 

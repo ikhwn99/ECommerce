@@ -1,114 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
 
 <head>
- <meta charset="UTF-8">
- <title>Login</title>
- <style>
-  body {
-   font-family: 'Arial', sans-serif;
-   margin: 0;
-   padding: 0;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   height: 100vh;
-   background-color: #f4f4f4;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
 
-  .form-container {
-   background-color: #fff;
-   width: 400px;
-   padding: 20px;
-   border-radius: 8px;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-
-  h2 {
-   color: #5e057e;
-   text-align: center;
-   margin-bottom: 20px;
-  }
-
-  label {
-   display: block;
-   margin-bottom: 8px;
-   color: #5e057e;
-  }
-
-  input {
-   width: 100%;
-   padding: 8px;
-   margin-bottom: 16px;
-   border: 1px solid #ccc;
-   border-radius: 4px;
-   box-sizing: border-box;
-  }
-
-  button {
-   background-color: #5e057e;
-   color: #fff;
-   padding: 10px 20px;
-   border: none;
-   border-radius: 4px;
-   cursor: pointer;
-   font-weight: bold;
-   transition: background-color 0.3s;
-  }
-
-  button:hover {
-   background-color: #299d00;
-  }
-
-  .form-footer {
-   text-align: center;
-   margin-top: 20px;
-   color: #888;
-  }
-
-  .error-message,
-  .logout-message {
-   background-color: #5e057e;
-   color: #fff;
-   padding: 10px;
-   border-radius: 3px;
-   text-align: center;
-  }
- </style>
 </head>
 
 <body>
- <div class="container">
-  <div class="form-container">
+    <section>
+        <div class="container mt-5 p-5">
+            <div class="row">
+                <div class="col-md-6 p-5">
+                    <img alt="" src="../static/img/ecom.png" width="100%" height="400px">
+                </div>
+                <div class="col-md-6 mt-3 p-5">
+                    <div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
+                        <div class="card-header">
+                            <p class="fs-4 text-center">Login</p>
+                            <div th:if="${param.error}" class="alert alert-danger text-center">
 
-   <div th:if="${param.error}">
-    <div class="error-message">
-     <p>Invalid Username or Password</p>
-    </div>
-   </div>
+                                <th:block th:if="${session.SPRING_SECURITY_LAST_EXCEPTION!=null}">
+                                    [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
+                                </th:block>
 
-   <div th:if="${param.logout}">
-    <div class="logout-message">
-     <p>Logout Successful!</p>
-    </div>
-   </div>
 
-   <h2>Login</h2>
-   <form th:action="@{/login}" method="post" role="form" th:object="${user}">
+                            </div>
 
-    <label for="username">Username:</label>
-    <input th:field="*{username}" type="text" id="username" name="username"
-     placeholder="Enter your Username" required>
+                            <div th:if="${param.logout}" class="alert alert-success">
+                                Logout Sucessfully</div>
+                        </div>
+                        <div class="card-body">
+                            <form th:action="@{/login}" method="post" role="form" th:object="${user}">
+                                <div class="mb-3">
+                                    <label class="form-label" for="username">Username</label> <input th:field="*{username}" class="form-control" name="username" type="text" required>
+                                </div>
 
-    <label for="password">Password:</label>
-    <input th:field="*{password}" type="password" id="password" name="password"
-     placeholder="Enter your Password" required>
+                                <div class="mb-3">
+                                    <label class="form-label" for="password">Password</label> <input th:field="*{password}" class="form-control"
+                                        name="password" type="password" required>
+                                </div>
 
-    <button type="submit">Login</button>
-   </form>
-   <p class="form-footer">Don't have an account? <a th:href="@{/register}">Register</a>here.</p>
-  </div>
- </div>
+                                <button type="submit" class="btn bg-primary text-white col-md-12">Login</button>
+                            </form>
+                        </div>
+
+                        <div class="card-footer text-center">
+                            <a href="/forgot-password" class="text-decoration-none">Forgot Password</a><br>
+                            Don't have an account ? <a th:href="@{/register}" class="text-decoration-none">Create
+                                one </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </body>
 
 </html>

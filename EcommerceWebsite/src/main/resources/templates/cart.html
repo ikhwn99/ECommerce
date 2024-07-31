@@ -10,6 +10,17 @@
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .delete-btn {
+            background: none;
+            border: none;
+            color: red;
+            cursor: pointer;
+        }
+        .delete-btn i {
+            font-size: 1.2em;
+        }
+    </style>
 </head>
 
 <body>
@@ -72,16 +83,30 @@
         <div class="container card-sh" style="margin-top: 70px; margin-bottom: 100px;">
             <table class="table">
                 <tr>
+                    <th>Product ID</th>
                     <th>Product Name</th>
                     <th>Quantity</th>
                     <th>Unit Price</th>
                     <th>Total Price</th>
                 </tr>
                 <tr th:each="cart : ${carts}">
+                    <td th:text="${cart.id}"></td>
                     <td th:text="${cart.productName}"></td>
-                    <td th:text="${cart.quantity}"></td>
+<!--                    <td th:text="${cart.quantity}"></td>-->
+                    <td>
+                        <input type="number" th:name="'quantity_' + ${cart.id}"
+                               th:value="${cart.quantity}" min="1" />
+                    </td>
                     <td th:text="${cart.unitPrice}"></td>
                     <td th:text="${cart.price}"></td>
+<!--                    <td>-->
+<!--                        <form th:action="@{/cart/delete}" method="post" style="display:inline;">-->
+<!--                            <input type="hidden" name="cartItemId" th:value="${cart.id}" />-->
+<!--                            <button type="submit" class="delete-btn" title="Delete">-->
+<!--                                <i class="fas fa-trash"></i>-->
+<!--                            </button>-->
+<!--                        </form>-->
+<!--                    </td>-->
                 </tr>
             </table>
         </div>

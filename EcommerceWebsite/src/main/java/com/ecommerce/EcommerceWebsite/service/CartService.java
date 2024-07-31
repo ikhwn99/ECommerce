@@ -22,6 +22,19 @@ public class CartService {
         return cartRepository.findByUserId(userId);
     }
 
+    public void addToCart(Cart cart) {
+        Optional<Cart> existingCartOpt = cartRepository.findByUserAndProduct(cart.getUser(), cart.getProduct());
+        
+        if (existingCartOpt.isPresent()) {
+            Cart existingCart = existingCartOpt.get();
+            existingCart.setQuantity(existingCart.getQuantity() + cart.getQuantity());
+            existingCart.setPrice(existingCart.getPrice() + (cart.getUnitPrice() * cart.getQuantity()));
+            cartRepository.save(existingCart);
+        } else {
+            cartRepository.save(cart);
+        }
+    }
+
     public Cart getCartById(Long id) {
         Optional <Cart> optional = cartRepository.findById(id);
         Cart cart = null;

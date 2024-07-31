@@ -57,7 +57,7 @@
                     </li> -->
                     <li class="nav-item d-flex align-items-center"><span th:text="'Welcome ' + ${userdetail.fullname}"></span></li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/cart}"><i class="fa-solid fa-cart-shopping"></i></a>
                     </li>
                     <li class="nav-item d-flex align-items-center">
                         <!-- <a class="nav-link active" aria-current="page" href="/register">REGISTER</a> -->

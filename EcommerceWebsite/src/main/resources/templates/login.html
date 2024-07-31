@@ -19,24 +19,20 @@
                         <p class="fs-4 text-center">Login</p>
                         <div th:if="${param.error}"
                              class="alert alert-danger text-center">
-
                             <th:block
                                     th:if="${session.SPRING_SECURITY_LAST_EXCEPTION!=null}">
                                 [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
                             </th:block>
-
-
-
                         </div>
-
                         <div th:if="${param.logout}" class="alert alert-success">
                             Logout Sucessfully</div>
                     </div>
+                    <div> <p th:if="${param.message == 'password-reset'}">Password has been reset successfully.</p></div>
                     <div class="card-body">
                         <form th:action="@{/login}" method="post">
                             <div class="mb-3">
                                 <label class="form-label">Email</label> <input
-                                    class="form-control" name="email" type="email">
+                                    class="form-control" name="email" th:value="${email}" placeholder="Email" type="email">
                             </div>
 
                             <div class="mb-3">
@@ -49,8 +45,8 @@
                     </div>
 
                     <div class="card-footer text-center">
-                        <a href="/test" class="text-decoration-none">Forgot Password</a><br>
-                        Don't have an account ? <a href="#" class="text-decoration-none">Create
+                        <a href="/forgotpassword" class="text-decoration-none">Forgot Password</a><br>
+                        Don't have an account ? <a href="/register" class="text-decoration-none">Create
                         one </a>
                     </div>
                 </div>

@@ -26,8 +26,8 @@ public class HomeController {
     //     return "product";
     // }
 
-    @GetMapping("/view_product")
-    public String view_product(){
-        return "view_product";
-    }
+    // @GetMapping("/view_product")
+    // public String view_product(){
+    //     return "view_product";
+    // }
 }

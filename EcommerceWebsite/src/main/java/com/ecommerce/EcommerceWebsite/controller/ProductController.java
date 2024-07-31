@@ -1,6 +1,10 @@
 package com.ecommerce.EcommerceWebsite.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -14,10 +18,15 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/products") 
-    public String viewProductPage(Model model) {
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @GetMapping("/product") 
+    public String viewProductPage(Model model, Principal principal) {
         model.addAttribute("listProducts", productService.getAllProducts());
-        return "product/index";
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("userdetail", userDetails);
+        return "product";
     }
 
     @GetMapping("/showNewProductForm")
@@ -35,12 +44,15 @@ public class ProductController {
     }
 
     @GetMapping("/productDetail/{id}")
-    public String productDetail(@PathVariable(value = "id") long id, Model model) {
+    public String productDetail(@PathVariable(value = "id") long id, Model model, Principal principal) {
 
         Product product = productService.getProductById(id);
 
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("userdetail", userDetails);
+
         model.addAttribute("product", product);
-        return "product/product_detail";
+        return "view_product";
     }
 
     // @GetMapping("/deleteProduct/{id}")

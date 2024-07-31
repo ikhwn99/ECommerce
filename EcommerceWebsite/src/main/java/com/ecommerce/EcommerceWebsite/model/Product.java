@@ -1,44 +1,29 @@
 package com.ecommerce.EcommerceWebsite.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Table(name = "product_table")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "product_name")
-    private String productName;
-
-    @Column(name = "product_price")
-    private double productPrice;
-
-    @Column(name = "product_desc")
-    private String productDescription;
+    private String title;
+    private double price;
+    private String description;
+    private int discount;
+    private double discount_price;
+    private int stock;
+    private String image;
+    private int is_active;
+    private String category;
     
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getProductName() {
-        return productName;
-    }
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-    public double getProductPrice() {
-        return productPrice;
-    }
-    public void setProductPrice(double productPrice) {
-        this.productPrice = productPrice;
-    }
-    public String getProductDescription() {
-        return productDescription;
-    }
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
-    }
 }

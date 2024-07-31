@@ -50,5 +50,4 @@ public class AdminController {
     public String loadAdd_admin(){
         return "admin/add_admin";
     }
-
 }

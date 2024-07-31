@@ -31,13 +31,6 @@ public class UserController {
         return "index";
     }
 
-    @GetMapping("/product")
-    public String product(Model model, Principal principal) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-        model.addAttribute("userdetail", userDetails);
-        return "product";
-    }
-
     @GetMapping("/login")
     public String login(Model model, UserDto userDto) {
         model.addAttribute("user", userDto);

@@ -19,6 +19,9 @@ import com.ecommerce.EcommerceWebsite.service.CartService;
 import com.ecommerce.EcommerceWebsite.service.UserService;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -83,11 +86,30 @@ public class CartController {
         cart.setUser(user);
         cart.setProduct(product);
         cart.setUnitPrice(price);
+        cart.setQuantity(quantity);
         cart.setPrice(price*quantity);
         
         cartService.addToCart(cart);
         return "redirect:/cart";
     }
+
+    @PostMapping("cart/updateQty") 
+    public String updateQuantityInCart(@ModelAttribute("cart") Cart cart, Principal principal, @RequestParam("user_id") Long userId, @RequestParam("product_id") Long productId, @RequestParam("quantity") int quantity, @RequestParam("unit_price") double unitPrice) {
+        String username = principal.getName();
+        User user = userService.findByUsername(username);
+
+        Product product = productRepository.findById(productId)
+            .orElseThrow(() -> new RuntimeException("product not found for id: " + productId));
+
+        cart.setUser(user);
+        cart.setProduct(product);
+        cart.setQuantity(quantity);
+        cart.setUnitPrice(unitPrice);
+
+        cartService.updateQuantity(cart);
+        return "redirect:/cart";
+    }
+    
 
     // @PostMapping("cart")
     // public String saveCart(@ModelAttribute("cart") Cart cart, @RequestParam("user_id") Long userId, @RequestParam("product_id") Long productId, @RequestParam("price") double price, @RequestParam("quantity") int quantity, @RequestParam("product_name") String name) {

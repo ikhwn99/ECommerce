@@ -1,0 +1,92 @@
+package com.ecommerce.EcommerceWebsite.controller;
+
+import java.security.Principal;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+
+import com.ecommerce.EcommerceWebsite.config.CustomUserDetails;
+import com.ecommerce.EcommerceWebsite.model.*;
+import com.ecommerce.EcommerceWebsite.repository.*;
+import com.ecommerce.EcommerceWebsite.service.CartService;
+import org.springframework.web.bind.annotation.*;
+
+
+
+@Controller
+public class CartController {
+    @Autowired
+    private CartService cartService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    // @GetMapping("cart/{id}")
+    // public String displayCart(@PathVariable(value = "id") Long id, Model model) {
+    //     Cart cart = cartService.getCartById(id);
+    //     model.addAttribute("cart", cart);
+    //     return "cart";
+    // }
+
+    // @GetMapping("cart/user/{userId}")
+    // public String displayCartByUser(@PathVariable(value = "userId") Long userId, Model model) {
+    //     List<Cart> carts = cartService.getCartByUserId(userId);
+    //     model.addAttribute("carts", carts);
+    //     return "cart"; // Ensure you have a cart.html template that can handle a list of carts
+    // }
+
+    @GetMapping("cart")
+    public String displayCartByUser(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new UsernameNotFoundException("User not authenticated");
+        }
+
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        Long userId = userDetails.getId();
+
+        List<Cart> carts = cartService.getCartByUserId(userId);
+        model.addAttribute("carts", carts);
+        return "cart"; // Ensure you have a cart.html template that can handle a list of carts
+    }
+
+    @PostMapping("cart")
+    public String saveCart(@ModelAttribute("cart") Cart cart, @RequestParam("user_id") Long userId, @RequestParam("product_id") Long productId, @RequestParam("price") double price, @RequestParam("quantity") int quantity, @RequestParam("product_name") String name) {
+
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("User not found for id: " + userId));
+        Product product = productRepository.findById(productId)
+            .orElseThrow(() -> new RuntimeException("Product not found for id: " + productId));
+        
+        cart.setProductName(name);
+        cart.setUser(user);
+        cart.setProduct(product);
+        cart.setUnitPrice(price);
+        cart.setPrice(price*quantity);
+
+        cartService.updateCart(cart);
+        return "redirect:/cart";
+    }
+    
+
+    // @PostMapping("/cart")
+    // public String saveEmployee(@ModelAttribute("employee") Employee employee) {
+    //     // save employee to database
+    //     employeeService.saveEmployee(employee);
+    //     return "redirect:/employee";
+    // }
+    
+}

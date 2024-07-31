@@ -1,5 +1,7 @@
 package com.ecommerce.EcommerceWebsite.model;
 
+import java.util.Set;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,5 +27,8 @@ public class Product {
     private String image;
     private int is_active;
     private String category;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Cart> carts;
     
 }

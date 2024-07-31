@@ -1,5 +1,7 @@
 package com.ecommerce.EcommerceWebsite.model;
 
+import java.util.Set;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +29,9 @@ public class User {
     private String fullname;
     private String address;
     private int phone;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Cart> carts;
 
     public User(String email, String username, String password, String fullname, String address, int phone) {
         super();

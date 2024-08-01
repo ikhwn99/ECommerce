@@ -91,6 +91,9 @@
                     <th>Action</th>
                 </tr>
                 <tr th:each="cart : ${carts}">
+                    <td>
+                        <input type="checkbox" name="selectedProducts" th:value="${cart.id}" />
+                    </td>
                     <td th:text="${cart.id}"></td>
                     <td th:text="${cart.productName}"></td>
 
@@ -126,11 +129,12 @@
 
                 </tr>
             </table>
+            <div class="d-flex justify-content-end py-3">
+                <button class="btn btn-success"><a class="text-decoration-none text-white" >Proceed to Checkout</a></button>
+            </div>
         </div>
 
-        <div>
-            <button class="btn btn-success">Proceed to Checkout</button>
-        </div>
+
         
     </section>
 
@@ -145,7 +149,7 @@
     
     <!-- Start Footer -->
     <div class="container-fluid p-1 bg-primary text-center text-white" style="margin-top: 100px">
-        <p>ecom.com</p>
+        <p>Beauty Shoppe</p>
     </div>
     <!-- End Footer  -->
 

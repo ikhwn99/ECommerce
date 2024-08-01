@@ -11,6 +11,16 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/success") //GetMapping to index.html
+    public String success(){
+        return "success";
+    }
+
+    @GetMapping("/my_orders") //GetMapping to index.html
+    public String my_orders(){
+        return "my_orders";
+    }
+
     // @GetMapping("/login")
     // public String login(){
     //     return "login";

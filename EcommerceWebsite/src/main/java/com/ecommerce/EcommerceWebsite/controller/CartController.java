@@ -20,8 +20,8 @@ import com.ecommerce.EcommerceWebsite.service.UserService;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -71,7 +71,7 @@ public class CartController {
 
         List<Cart> carts = cartService.getCartByUserId(userId);
         model.addAttribute("carts", carts);
-        return "cart"; // Ensure you have a cart.html template that can handle a list of carts
+        return "cart";
     }
 
     @PostMapping("/cart")

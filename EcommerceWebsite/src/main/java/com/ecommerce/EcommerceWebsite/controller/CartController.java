@@ -109,7 +109,12 @@ public class CartController {
         cartService.updateQuantity(cart);
         return "redirect:/cart";
     }
-    
+
+    @PostMapping("/cart/delete")
+    public String deleteCartItem(@RequestParam("cartItemId") Long cartItemId) {
+        cartService.deleteCartById(cartItemId);
+        return "redirect:/cart"; // Redirect to the cart page after deletion
+    }
 
     // @PostMapping("cart")
     // public String saveCart(@ModelAttribute("cart") Cart cart, @RequestParam("user_id") Long userId, @RequestParam("product_id") Long productId, @RequestParam("price") double price, @RequestParam("quantity") int quantity, @RequestParam("product_name") String name) {

@@ -95,12 +95,12 @@
                     <td th:text="${cart.productName}"></td>
 
 <!--                    <td th:text="${cart.quantity}"></td>-->
-                    <td>
-                        <input type="number" th:name="'quantity_' + ${cart.id}"
-                               th:value="${cart.quantity}" min="1" />
-                    </td>
-                    <td th:text="${cart.unitPrice}"></td>
-                    <td th:text="${cart.price}"></td>
+<!--                    <td>-->
+<!--                        <input type="number" th:name="'quantity_' + ${cart.id}"-->
+<!--                               th:value="${cart.quantity}" min="1" />-->
+<!--                    </td>-->
+<!--                    <td th:text="${cart.unitPrice}"></td>-->
+<!--                    <td th:text="${cart.price}"></td>-->
                     <td>
                         <form th:action="@{/cart/updateQty}" method="post">
                             <input type="hidden" class="form-control" name="product_id" id="" th:value="${cart.product.id}">
@@ -109,7 +109,6 @@
                             <input type="hidden" class="form-control" name="unit_price" id="" th:value="${cart.unitPrice}">  
                             <button type="submit" hidden></button>  
                         </form>
-                        
                     </td>
                     <td th:text="${cart.unitPrice}"></td>
                     <td th:text="${cart.price}"></td>

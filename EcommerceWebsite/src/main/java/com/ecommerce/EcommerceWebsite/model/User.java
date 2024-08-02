@@ -1,19 +1,15 @@
 package com.ecommerce.EcommerceWebsite.model;
 
+import jakarta.persistence.*;
+import lombok.*;
 import java.util.Set;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+@Table(name = "user_table")
+@Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "user_table")
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,40 +26,22 @@ public class User {
     private String address;
     private int phone;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private PasswordResetToken passwordResetTokens;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Cart> carts;
 
-    public User(String email, String username, String password, String fullname, String address, int phone) {
-        super();
+    public User(String email, String username, String encodedPassword, String fullname, String address, int phone) {
         this.email = email;
         this.username = username;
-        this.password = password;
+        this.password = encodedPassword;
         this.fullname = fullname;
         this.address = address;
         this.phone = phone;
-       }
+    }
 
     @Override
     public String toString() {
         return "User [id=" + id + ", email=" + email + ", username=" + username + ", password=" + password + ", fullname=" + fullname + "]";
     }
 }
-
-// @Table(name = "user")
-// @Entity
-// @Getter
-// @Setter
-// @AllArgsConstructor
-// @NoArgsConstructor
-// public class User {
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
-//     private String name;
-//     private String email;
-//     private String password;
-//     private String address;
-//     private int phone;
-
-// }
-

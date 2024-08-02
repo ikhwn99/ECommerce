@@ -1,41 +1,43 @@
 package com.ecommerce.EcommerceWebsite.controller;
 
+import com.ecommerce.EcommerceWebsite.config.CustomUserDetailsService;
 import com.ecommerce.EcommerceWebsite.dto.UserDto;
+import com.ecommerce.EcommerceWebsite.model.PasswordResetToken;
 import com.ecommerce.EcommerceWebsite.model.User;
-import com.ecommerce.EcommerceWebsite.service.UserService;
+import com.ecommerce.EcommerceWebsite.repository.TokenRepository;
 
 import java.security.Principal;
 
+import com.ecommerce.EcommerceWebsite.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 @Controller
 public class UserController {
+
     @Autowired
-    private UserDetailsService userDetailsService;
+    private CustomUserDetailsService userDetailsService;
 
-    private UserService userService;
+    @Autowired
+    private UserServiceImpl userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    @Autowired
+    private TokenRepository tokenRepository;
 
-    @GetMapping("/home")
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @GetMapping("/")
     public String home(Model model, Principal principal) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-        model.addAttribute("userdetail", userDetails);
+        if(principal != null){
+            UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+            model.addAttribute("userdetail", userDetails);
+        }else model.addAttribute("userdetail", "");
         return "index";
-    }
-
-    @GetMapping("/my_orders")
-    public String my_orders(Model model, Principal principal) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-        model.addAttribute("userdetail", userDetails);
-        return "my_orders";
     }
 
     @GetMapping("/login")
@@ -51,7 +53,7 @@ public class UserController {
     }
 
     @PostMapping("register")
-    public String registerSava(@ModelAttribute("user") UserDto userDto, Model model) {
+    public String registerUser(@ModelAttribute("user") UserDto userDto, Model model) {
         User user = userService.findByUsername(userDto.getUsername());
         if (user != null) {
             model.addAttribute("Userexist", user);
@@ -60,6 +62,53 @@ public class UserController {
         userService.save(userDto);
         return "redirect:/login";
     }
+
+    @GetMapping("/logout")
+    public String logoutSuccess() {
+        // Additional logic after logout, if needed
+        return "redirect:/login?logout";
+    }
+
+    @GetMapping("/forgotpassword")
+    public String forgotPassword() {
+        return "forgotpassword";
+    }
+
+    @PostMapping("/forgotpassword")
+    public String forgotPasswordProcess(@RequestParam String email) {
+        String output = "";
+        User user = userService.getUserByEmail(email);
+        if (user != null) {
+            output = userDetailsService.sendEmail(user);
+        }
+        if (output.equals("success")) {
+            return "redirect:/forgotpassword?success";
+        }
+        return "redirect:/login?error";
+    }
+
+    @GetMapping("/resetpassword/{token}")
+    public String resetPasswordForm(@PathVariable String token, Model model) {
+        PasswordResetToken reset = tokenRepository.findByToken(token);
+        if (reset != null && userDetailsService.hasExpired(reset.getExpiryDateTime())) {
+            model.addAttribute("email", reset.getUser().getEmail());
+            return "resetpassword";
+        }
+        return "redirect:/forgotpassword?error";
+    }
+
+    @PostMapping("/resetpassword")
+    public String passwordResetProcess(@RequestParam String email,String password) {
+        User user = userService.getUserByEmail(email);
+        if(user != null) {
+            user.setPassword(passwordEncoder.encode(password));
+            userService.save(user);
+        }
+        return "redirect:/login";
+    }
+
+
+
 }
 
 

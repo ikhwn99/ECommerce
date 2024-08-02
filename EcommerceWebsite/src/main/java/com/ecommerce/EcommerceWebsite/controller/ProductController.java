@@ -21,13 +21,34 @@ public class ProductController {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @GetMapping("/product") 
-    public String viewProductPage(Model model, Principal principal) {
-        model.addAttribute("listProducts", productService.getAllProducts());
+    // @GetMapping("/product") 
+    // public String viewProductPage(Model model, Principal principal) {
+    //     model.addAttribute("listProducts", productService.getAllProducts());
+    //     UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+    //     model.addAttribute("userdetail", userDetails);
+    //     return "product";
+    // }
+
+    @GetMapping("/product")
+	public String products(Model model, Principal principal,@RequestParam(value = "category", defaultValue = "") String category) {
+        //model.addAttribute("listProducts", productService.getAllProducts());
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         model.addAttribute("userdetail", userDetails);
-        return "product";
-    }
+		List<Product> listProducts = productService.getAllActiveProducts(category);
+		model.addAttribute("listProducts", listProducts);
+		model.addAttribute("paramValue", category);
+		return "product";
+	}
+
+    @GetMapping("/search")
+	public String searchProduct(@RequestParam String ch, Model model, Principal principal) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("userdetail", userDetails);
+		List<Product> listProducts = productService.searchProduct(ch);
+		model.addAttribute("listProducts", listProducts);
+		return "product";
+
+	}
 
     @GetMapping("/showNewProductForm")
     public String showNewProductForm(Model model) {

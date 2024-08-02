@@ -31,6 +31,13 @@ public class UserController {
         return "index";
     }
 
+    @GetMapping("/my_orders")
+    public String my_orders(Model model, Principal principal) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("userdetail", userDetails);
+        return "my_orders";
+    }
+
     @GetMapping("/login")
     public String login(Model model, UserDto userDto) {
         model.addAttribute("user", userDto);

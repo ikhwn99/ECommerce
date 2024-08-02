@@ -7,3 +7,30 @@
 .cat-div{
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, .1);
 }
+
+.navbar-chocolate {
+    background-color: #3e2723; /* Dark chocolate color */
+}
+
+.bg-dark-chocolate {
+    background-color: #3d2b1f; /* Dark chocolate color */
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    margin-top: auto;
+}
+
+
+.btn-chocolate {
+    background-color: #3d2b1f; /* Chocolate color */
+    border-color: #3
+

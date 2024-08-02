@@ -16,9 +16,12 @@
 
 <body>
     <!-- Start Navbar -->
-    <nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-dark">
+<!--    <nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-dark">-->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark navbar-chocolate">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><i class="fa-solid fa-store">&nbsp;</i>Ecom</a>
+<!--            <a class="navbar-brand" href="#"><i class="fa-solid fa-store">&nbsp;</i>Ecom</a>-->
+            <a class="navbar-brand" href="#"><i class="fa-solid fa-shopping-bag"></i>&nbsp;Beauty Deck</a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -70,8 +73,28 @@
     <div th:replace="${content}"></div>
 
     <!-- Start Footer -->
-    <div class="container-fluid p-1 bg-primary text-center text-white" style="margin-top: 100px">
-        <p>ecom.com</p>
+<!--    <div class="container-fluid p-1 bg-primary text-center text-white" style="margin-top: 100px">-->
+<!--        <p>ecom.com</p>-->
+<!--    </div>-->
+    <div class="container-fluid p-4 text-center text-white navbar-chocolate mt-auto" style="margin-top: 100px">
+        <div class="row">
+            <div class="col">
+                <a href="https://www.instagram.com/yourprofile" class="text-white text-decoration-none">
+                    <i class="fa-brands fa-instagram"></i> Instagram
+                </a>
+            </div>
+            <div class="col">
+                <a href="https://www.facebook.com/yourprofile" class="text-white text-decoration-none">
+                    <i class="fa-brands fa-facebook"></i> Facebook
+                </a>
+            </div>
+            <div class="col">
+                <a href="https://www.twitter.com/yourprofile" class="text-white text-decoration-none">
+                    <i class="fa-brands fa-twitter"></i> Twitter
+                </a>
+            </div>
+        </div>
+        <p><i class="fa-solid fa-shopping-bag"></i> BEAUTY DECK</p>
     </div>
     <!-- End Footer  -->
 

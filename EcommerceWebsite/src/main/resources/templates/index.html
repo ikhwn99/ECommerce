@@ -15,9 +15,11 @@
 
 <body>
 	<!-- Start Navbar -->
-	<nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-dark">
+<!--	<nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-dark">-->
+	<nav class="navbar navbar-expand-lg fixed-top navbar-dark navbar-chocolate">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#"><i class="fa-solid fa-store">&nbsp;</i>Ecom</a>
+<!--			<a class="navbar-brand" href="#"><i class="fa-solid fa-store">&nbsp;</i>Ecom</a>-->
+			<a class="navbar-brand" href="#"><i class="fa-solid fa-shopping-bag"></i>&nbsp;BEAUTY DECK</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
 				aria-label="Toggle navigation">
@@ -55,13 +57,16 @@
 					<li class="nav-item">
 						<a class="nav-link active" aria-current="page" href="/register">REGISTER</a>
 					</li> -->
-					<li class="nav-item d-flex align-items-center"><span th:text="'Welcome ' + ${userdetail.fullname}"></span></li>
+					<li class="nav-item d-flex align-items-center ms-3"><span class="text-white" th:text="'Welcome ' + ${userdetail.fullname}"></span></li>
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" th:href="@{/cart}"><i class="fa-solid fa-cart-shopping"></i></a>
+						<a class="nav-link active ms-2" aria-current="page" th:href="@{/cart}"><i class="fa-solid fa-cart-shopping"></i></a>
+					</li>
+					<li class="nav-item ml-3">
+						<a class="nav-link active" aria-current="page" th:href="@{/my_orders}">My Orders</a>
 					</li>
 					<li class="nav-item d-flex align-items-center">
 						<!-- <a class="nav-link active" aria-current="page" href="/register">REGISTER</a> -->
-						<a class="text-white text-decoration-none" th:href="@{/logout}">Logout</a>
+						<a class="text-white text-decoration-none" th:href="@{/logout}"><i class="fa-solid fa-sign-out"></i></a>
 					</li> 
 
 				</ul>
@@ -99,7 +104,7 @@
         <div class="container">
 			<div class="row">
 				<p class="text-center fs-4">Category</p>
-				<h2 th:text="${userdetail.fullname}"></h2>
+<!--				<h2 th:text="${userdetail.fullname}"></h2>-->
 				<div class="col-md-2">
 					<div
 						class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
@@ -220,9 +225,32 @@
     </section>
 
 	<!-- Start Footer -->
-    <div class="container-fluid p-1 bg-primary text-center text-white" style="margin-top: 100px">
-        <p>ecom.com</p>
-    </div>
+<!--    <div class="container-fluid p-1 bg-primary text-center text-white" style="margin-top: 100px">-->
+<!--        <p>ecom.com</p>-->
+<!--    </div>-->
+<!--	<div class="container-fluid p-1 text-center text-white navbar-chocolate" style="margin-top: 100px">-->
+<!--		<p>Beauty Shoppe</p>-->
+<!--	</div>-->
+	<div class="container-fluid p-4 text-center text-white navbar-chocolate mt-auto" style="margin-top: 100px">
+		<div class="row">
+			<div class="col">
+				<a href="https://www.instagram.com/yourprofile" class="text-white text-decoration-none">
+					<i class="fa-brands fa-instagram"></i> Instagram
+				</a>
+			</div>
+			<div class="col">
+				<a href="https://www.facebook.com/yourprofile" class="text-white text-decoration-none">
+					<i class="fa-brands fa-facebook"></i> Facebook
+				</a>
+			</div>
+			<div class="col">
+				<a href="https://www.twitter.com/yourprofile" class="text-white text-decoration-none">
+					<i class="fa-brands fa-twitter"></i> Twitter
+				</a>
+			</div>
+		</div>
+		<p><i class="fa-solid fa-shopping-bag"></i> BEAUTY DECK</p>
+	</div>
     <!-- End Footer  -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

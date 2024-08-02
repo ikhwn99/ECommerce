@@ -116,6 +116,11 @@ public class CartController {
         return "redirect:/cart"; // Redirect to the cart page after deletion
     }
 
+//    @GetMapping("/my-orders")
+//    public String viewOrders() {
+//        return "my_orders"; // This should match the name of your HTML file without the .html extension
+//    }
+
     // @PostMapping("cart")
     // public String saveCart(@ModelAttribute("cart") Cart cart, @RequestParam("user_id") Long userId, @RequestParam("product_id") Long productId, @RequestParam("price") double price, @RequestParam("quantity") int quantity, @RequestParam("product_name") String name) {
 

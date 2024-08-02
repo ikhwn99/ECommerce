@@ -7,5 +7,7 @@ import com.ecommerce.EcommerceWebsite.model.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>{
-    
+    List<Product> findByCategory(String category);
+
+	List<Product> findByTitleContainingIgnoreCaseOrCategoryContainingIgnoreCase(String ch, String ch2);
 }

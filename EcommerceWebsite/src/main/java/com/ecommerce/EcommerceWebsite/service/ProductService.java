@@ -37,4 +37,19 @@ public class ProductService {
         this.productRepository.deleteById(id);
     }
 
+    public List<Product> getAllActiveProducts(String category) {
+		List<Product> products = null;
+		if (ObjectUtils.isEmpty(category)) {
+			products = productRepository.findAll();
+		} else {
+			products = productRepository.findByCategory(category);
+		}
+
+		return products;
+	}
+
+	public List<Product> searchProduct(String ch) {
+		return productRepository.findByTitleContainingIgnoreCaseOrCategoryContainingIgnoreCase(ch, ch);
+	}
+
 }

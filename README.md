@@ -26,7 +26,7 @@ CREATE TABLE `product` (
   PRIMARY KEY (`id`)
 )
 
-SELECT * FROM bandingkan_db.product_table;
+SELECT * FROM ecommerce_db.product_table;
 INSERT INTO `product_table` (`id`,`category`,`description`,`discount`,`discount_price`,`image`,`is_active`,`price`,`stock`,`title`) VALUES (1,'Skincare','60ml x 1 botol',5,114,'1.png',1,120,100,'Skinzen Face Oil');
 INSERT INTO `product_table` (`id`,`category`,`description`,`discount`,`discount_price`,`image`,`is_active`,`price`,`stock`,`title`) VALUES (2,'Skincare','Zinnia Magenta Facial Cleanser (100ml)',10,31.5,'2.png',1,35,100,'Zinnia Magenta');
 INSERT INTO `product_table` (`id`,`category`,`description`,`discount`,`discount_price`,`image`,`is_active`,`price`,`stock`,`title`) VALUES (3,'Skincare','Bio Miracle Action Serum (20ml)',9,35.49,'3.png',1,39,100,'Bio Miracle Action Serum');

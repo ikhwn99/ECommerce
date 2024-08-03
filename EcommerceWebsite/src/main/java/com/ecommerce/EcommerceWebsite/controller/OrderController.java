@@ -47,12 +47,12 @@ public class OrderController {
     }
 
     @PostMapping("/checkout")
-    public String processOrder(@RequestParam("billingAddress") String billingAddress, Principal principal) {
+    public String processOrder(@RequestParam("fullname") String fullname, @RequestParam("email") String email, @RequestParam("phone") int phone, @RequestParam("billingAddress") String billingAddress, Principal principal) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         Long userId = ((CustomUserDetails) userDetails).getId();
 
         // Create order with billing address and items from cart
-        orderService.createOrder(billingAddress, userId);
+        orderService.createOrder(fullname, phone, email, billingAddress, userId, "Successful");
 
         return "orderConfirmation"; // Redirect to an order confirmation page
     }

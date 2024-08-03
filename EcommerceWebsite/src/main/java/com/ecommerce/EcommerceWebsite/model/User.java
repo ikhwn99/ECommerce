@@ -30,6 +30,8 @@ public class User {
     private PasswordResetToken passwordResetTokens;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Cart> carts;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Order> order;
 
     public User(String email, String username, String encodedPassword, String fullname, String address, int phone) {
         this.email = email;

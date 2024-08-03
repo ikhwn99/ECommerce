@@ -22,8 +22,18 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String billingAddress;
     private LocalDateTime createdAt;
+    private String custName;
+    private int custPhone;
+    private String custEmail;
+    private String billingAddress;
+    private String status;
+
+    double totalPrice;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();

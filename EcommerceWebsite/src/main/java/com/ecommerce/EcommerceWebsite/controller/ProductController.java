@@ -31,10 +31,12 @@ public class ProductController {
     // }
 
     @GetMapping("/product")
-	public String products(Model model, Principal principal,@RequestParam(value = "category", defaultValue = "") String category) {
+	public String products(Model model, Principal principal, @RequestParam(value = "category", defaultValue = "") String category) {
         //model.addAttribute("listProducts", productService.getAllProducts());
-        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-        model.addAttribute("userdetail", userDetails);
+        if(principal != null){
+            UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+            model.addAttribute("userdetail", userDetails);
+        } else model.addAttribute("userdetail", null);
 		List<Product> listProducts = productService.getAllActiveProducts(category);
 		model.addAttribute("listProducts", listProducts);
 		model.addAttribute("paramValue", category);

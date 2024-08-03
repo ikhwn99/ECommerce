@@ -119,6 +119,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Page</title>
+
+    <style>
+        .btn-chocolate {
+            background-color: #3d2b1f; /* Chocolate color */
+            border-color: #3d2b1f;
+            color: white; /* Text color */
+        }
+        .btn-chocolate:hover {
+        background-color: blue;
+        }
+    </style>
 </head>
 
 <body>
@@ -204,13 +215,13 @@
                                         name="img" type="file">
                                 </div> -->
 
-                                <button type="submit" class="btn bg-primary text-white col-md-12">Register</button>
+                                <button type="submit" class="btn-chocolate text-white col-md-12">Register</button>
                             </form>
                         </div>
 
                         <div class="card-footer text-center">
 
-                            have an account ? <a th:href="@{/login}" class="text-decoration-none">Login
+                            Have an account? <a th:href="@{/login}" class="text-decoration-none">Login
                             </a>
                         </div>
                     </div>

@@ -56,4 +56,9 @@ public class OrderController {
 
         return "orderConfirmation"; // Redirect to an order confirmation page
     }
+
+    @GetMapping("/my_orders") //GetMapping to index.html
+    public String my_orders(){
+        return "my_orders";
+    }
 }

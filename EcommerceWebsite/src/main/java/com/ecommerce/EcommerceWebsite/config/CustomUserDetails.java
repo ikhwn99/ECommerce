@@ -7,17 +7,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomUserDetails implements UserDetails{
     private Long id;
+    private String email;
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
     private String fullname;
+    private int phone;
+    private String address;
 
-    public CustomUserDetails(Long id, String username, String password, Collection<? extends GrantedAuthority> authorities, String fullname) {
+    public CustomUserDetails(Long id, String email, String username, String password, Collection<? extends GrantedAuthority> authorities, String fullname, int phone, String address) {
         this.id = id;
+        this.email = email;
         this.username = username;
         this.password = password;
         this.authorities = authorities;
         this.fullname = fullname;
+        this.phone = phone;
+        this.address = address;
     }
 
     public Long getId() {
@@ -26,6 +32,17 @@ public class CustomUserDetails implements UserDetails{
 
     public String getFullname() {
         return fullname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+    public String getAddress() {
+        return address;
     }
 
     @Override

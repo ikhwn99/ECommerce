@@ -67,4 +67,9 @@ public class CartService {
     public void deleteCartById(Long id) {
         this.cartRepository.deleteById(id);
     }
+
+    public void clearCartForUser(Long userId) {
+        List<Cart> cartItems = cartRepository.findByUserId(userId);
+        cartRepository.deleteAll(cartItems);
+    }
 }

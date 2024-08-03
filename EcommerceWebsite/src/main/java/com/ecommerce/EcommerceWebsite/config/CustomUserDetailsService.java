@@ -44,7 +44,7 @@ public class CustomUserDetailsService implements UserDetailsService{
         if (user == null) {
             throw new UsernameNotFoundException("Username or Password not found");
         }
-        return new CustomUserDetails(user.getId(), user.getUsername(), user.getPassword(), authorities(), user.getFullname());
+        return new CustomUserDetails(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(), authorities(), user.getFullname(), user.getPhone(), user.getAddress());
     }
 
     public Collection<? extends GrantedAuthority> authorities() {

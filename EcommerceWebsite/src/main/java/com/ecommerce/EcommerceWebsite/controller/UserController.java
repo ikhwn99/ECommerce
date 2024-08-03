@@ -36,7 +36,7 @@ public class UserController {
         if(principal != null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
             model.addAttribute("userdetail", userDetails);
-        }else model.addAttribute("userdetail", "");
+        }else model.addAttribute("userdetail", null);
         return "index";
     }
 

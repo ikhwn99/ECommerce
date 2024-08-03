@@ -77,4 +77,9 @@ public class OrderService {
         orderRepository.save(order);
         cartService.clearCartForUser(userId); // Optionally clear the cart after order creation
     }
+
+    public List<Order> getOrderByUserId(Long userId) {
+        return orderRepository.findByUserId(userId);
+    }
+
 }

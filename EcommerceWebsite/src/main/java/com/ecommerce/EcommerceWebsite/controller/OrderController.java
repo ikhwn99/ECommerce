@@ -1,6 +1,7 @@
 package com.ecommerce.EcommerceWebsite.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,15 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ecommerce.EcommerceWebsite.config.CustomUserDetails;
+import com.ecommerce.EcommerceWebsite.model.Order;
+import com.ecommerce.EcommerceWebsite.repository.OrderRepository;
 import com.ecommerce.EcommerceWebsite.service.*;
 
 @Controller
 public class OrderController {
     @Autowired
     private OrderService orderService;
-
-    @Autowired
-    private CartService cartService;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -54,11 +54,23 @@ public class OrderController {
         // Create order with billing address and items from cart
         orderService.createOrder(fullname, phone, email, billingAddress, userId, "Successful");
 
-        return "orderConfirmation"; // Redirect to an order confirmation page
+        return "success"; // Redirect to an order confirmation page
     }
 
     @GetMapping("/my_orders") //GetMapping to index.html
-    public String my_orders(){
+    public String displayOrderById(Model model, Principal principal){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new UsernameNotFoundException("User not authenticated");
+        }
+
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        Long userId = customUserDetails.getId();
+
+        List<Order> orders = orderService.getOrderByUserId(userId);
+        model.addAttribute("orders", orders);
+
         return "my_orders";
     }
+    
 }

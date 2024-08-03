@@ -62,7 +62,7 @@
 
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item d-flex align-items-center mx-5">
-						<span class="text-white" th:text="'Hi, ' + ${userdetail.fullname}"></span>
+						<span class="text-white" th:if="${userdetail}" th:text="'Hi, ' + ${userdetail.fullname}"></span>
 					</li>
 					<li class="nav-item mx-2">
 						<a class="nav-link active ms-2" aria-current="page" th:href="@{/cart}">
@@ -117,7 +117,7 @@
                             Price : <span style="font-size: larger; font-weight: bold;">RM</span>
                             <span class="fs-5 fw-bold" th:text="${product.discount_price}"></span>
                             <span class="fs-6 text-decoration-line-through text-secondary" th:text="${product.price}"></span>
-                            <span class="fs-6  text-success" th:text="${product.discount} + '% off'"></span>
+                            <span class="fs-6  text-success" th:text="${product.discount + '% off'}"></span>
                         </p>
 
                         <div class="row">
@@ -135,9 +135,9 @@
                             </div>
                         </div>
 
-                        <form th:action="@{/cart}" th:object="${product}" method="POST">
+                        <form th:if="${userdetail != null}" th:action="@{/cart}" th:object="${product}" method="POST">
                         <!-- <div th:object="${product}"> -->
-                            <input type="hidden" name="user_id" th:value="${userdetail.id}">
+                            <input type="hidden" name="user_id" th:if="${userdetail != null}" th:value="${userdetail.id}">
                             <input type="hidden" name="product_id" th:value="*{id}">
                             <input type="hidden" name="product_name" th:value="*{title}">
                             <input type="hidden" name="price" th:value="*{discount_price}">
@@ -148,7 +148,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <!-- <a th:href="@{/cart}" class="btn btn-danger w-100">Add To Cart</a> -->
-                                    <button type="submit" class="btn btn-chocolate1 w-100">Add To Cart</button>
+                                    <button type="submit" class="btn btn-chocolate1 w-100" t>Add to cart</button>
                                 </div>
                             </div>
                         <!-- </div> -->

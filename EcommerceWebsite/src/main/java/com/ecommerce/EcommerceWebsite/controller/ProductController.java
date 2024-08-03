@@ -72,8 +72,10 @@ public class ProductController {
 
         Product product = productService.getProductById(id);
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-        model.addAttribute("userdetail", userDetails);
+        if(principal!=null) {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+            model.addAttribute("userdetail", userDetails);
+        }
 
         model.addAttribute("product", product);
         return "view_product";

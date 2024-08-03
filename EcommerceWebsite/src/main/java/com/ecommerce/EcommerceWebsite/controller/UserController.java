@@ -84,7 +84,7 @@ public class UserController {
         if (output.equals("success")) {
             return "redirect:/forgotpassword?success";
         }
-        return "redirect:/login?error";
+        return "redirect:/forgotpassword?error";
     }
 
     @GetMapping("/resetpassword/{token}")
@@ -94,7 +94,7 @@ public class UserController {
             model.addAttribute("email", reset.getUser().getEmail());
             return "resetpassword";
         }
-        return "redirect:/forgotpassword?error";
+        return "redirect:/forgotpassword?errortoken";
     }
 
     @PostMapping("/resetpassword")

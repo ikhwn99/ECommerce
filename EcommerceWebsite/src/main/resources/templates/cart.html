@@ -93,7 +93,7 @@
             <table class="table">
                 <tr>
 <!--                    <th>Product ID</th>-->
-                    <th>Product Name</th>
+                    <th colspan="2">Product</th>
                     <th>Quantity</th>
                     <th>Unit Price</th>
                     <th>Total Price</th>
@@ -104,6 +104,9 @@
 <!--                        <input type="checkbox" name="selectedProducts" th:value="${cart.id}" />-->
 <!--                    </td>-->
 <!--                    <td th:text="${cart.id}"></td>-->
+                    <td class="w-25">
+                        <img th:src="@{'/img/obsb/'+${cart.product.image}}" alt="" class="w-50">
+                    </td>
                     <td th:text="${cart.productName}"></td>
 
 <!--                    <td th:text="${cart.quantity}"></td>-->

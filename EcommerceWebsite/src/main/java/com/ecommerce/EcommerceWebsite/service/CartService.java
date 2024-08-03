@@ -18,10 +18,12 @@ public class CartService {
         this.cartRepository.save(cart);
     }
 
+    // Get cart by user id
     public List<Cart> getCartByUserId(Long userId) {
         return cartRepository.findByUserId(userId);
     }
 
+    // Add product to cart
     public void addToCart(Cart cart) {
         Optional<Cart> existingCartOpt = cartRepository.findByUserAndProduct(cart.getUser(), cart.getProduct());
         
@@ -35,6 +37,7 @@ public class CartService {
         }
     }
 
+    // Update quantity product in cart
     public void updateQuantity(Cart cart) {
         Optional<Cart> existingCartOpt = cartRepository.findByUserAndProduct(cart.getUser(), cart.getProduct());
 
@@ -48,6 +51,7 @@ public class CartService {
         }
     }
 
+    // Get cart details by cart id
     public Cart getCartById(Long id) {
         Optional <Cart> optional = cartRepository.findById(id);
         Cart cart = null;
@@ -59,6 +63,7 @@ public class CartService {
         return cart;
     }
 
+    // Delete cart by cart id
     public void deleteCartById(Long id) {
         this.cartRepository.deleteById(id);
     }

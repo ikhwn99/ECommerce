@@ -56,6 +56,7 @@ public class CartController {
     //     return "cart"; // Ensure you have a cart.html template that can handle a list of carts
     // }
 
+    // Display cart by user id
     @GetMapping("cart")
     public String displayCartByUser(Model model, Principal principal) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
@@ -71,9 +72,11 @@ public class CartController {
 
         List<Cart> carts = cartService.getCartByUserId(userId);
         model.addAttribute("carts", carts);
+        
         return "cart";
     }
 
+    // Insert cart into cart table in database
     @PostMapping("/cart")
     public String saveCart(@ModelAttribute("cart") Cart cart, Principal principal, @RequestParam("user_id") Long userId, @RequestParam("product_id") Long productId, @RequestParam("price") double price, @RequestParam("quantity") int quantity, @RequestParam("product_name") String name) {
         String username = principal.getName();
@@ -93,6 +96,7 @@ public class CartController {
         return "redirect:/cart";
     }
 
+    // Update quantity product into cart table in database
     @PostMapping("cart/updateQty") 
     public String updateQuantityInCart(@ModelAttribute("cart") Cart cart, Principal principal, @RequestParam("user_id") Long userId, @RequestParam("product_id") Long productId, @RequestParam("quantity") int quantity, @RequestParam("unit_price") double unitPrice) {
         String username = principal.getName();
@@ -110,6 +114,7 @@ public class CartController {
         return "redirect:/cart";
     }
 
+    // Delete cart by cart id
     @PostMapping("/cart/delete")
     public String deleteCartItem(@RequestParam("cartItemId") Long cartItemId) {
         cartService.deleteCartById(cartItemId);

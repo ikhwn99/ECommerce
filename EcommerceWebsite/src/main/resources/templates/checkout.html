@@ -44,20 +44,6 @@
                             <label>Address</label> <input type="text" name="billingAddress" required
                                                           class="form-control col" th:value="${userdetail.address}">
                         </div>
-<!--                        <div class="col p-1">-->
-<!--                            <label>City</label> <input type="text" name="city" required-->
-<!--                                                       class="form-control col ms-2">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="mb-3 row">-->
-<!--                        <div class="col p-1">-->
-<!--                            <label>State</label> <input type="text" name="state" required-->
-<!--                                                        class="form-control col">-->
-<!--                        </div>-->
-<!--                        <div class="col p-1">-->
-<!--                            <label>Pincode</label> <input type="number" name="pincode" required-->
-<!--                                                          class="form-control col ms-2">-->
-<!--                        </div>-->
                     </div>
                     <!-- </form> -->
 
@@ -67,24 +53,36 @@
                     <hr>
                     <div class="card">
                         <div class="card-body">
-                            <table class="table table-borderless">
+                            <div class="card-title">Order Summary</div>
+                            <div th:each="cart : ${carts}">
+                                <div class="border my-2 px-3 py-3 d-flex">
+                                    <div class="col-md-2 me-3">
+                                        <img th:src="@{'/img/obsb/'+${cart.product.image}}" alt="" class="w-100">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p th:text="${cart.product.title}" class="fw-bold"></p>
+                                    </div>
+                                    <div class="col-md-4 text-end px-4 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <span th:text="'x ' + ${cart.quantity}"></span>
+                                            <p th:text="'RM ' + ${cart.unitPrice}"></p>
+                                        </div>
+                                        <div>
+                                            <span th:text="'RM ' + ${cart.price}" class="border-top border-dark fw-bold"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end px-3">
+                                <h5 th:text="'Total: ' + ${totalPrice}"></h5>
+                            </div>
+                            <!-- <table class="table table-borderless">
                                 <tbody>
                                 <tr>
                                     <td>Total price</td>
                                     <td>:</td>
                                     <td>RM [[${orderPrice}]]</td>
                                 </tr>
-<!--                                <tr>-->
-<!--                                    <td>Delivery Fee</td>-->
-<!--                                    <td>:</td>-->
-<!--                                    <td>&#8377; 250</td>-->
-<!--                                </tr>-->
-
-<!--                                <tr>-->
-<!--                                    <td>Tax</td>-->
-<!--                                    <td>:</td>-->
-<!--                                    <td>&#8377; 100</td>-->
-<!--                                </tr>-->
 
                                 <tr class="border-top">
                                     <td>Product Name</td>
@@ -102,7 +100,7 @@
                                     <td>RM [[${totalOrderPrice}]]</td>
                                 </tr>
                                 </tbody>
-                            </table>
+                            </table> -->
                         </div>
                     </div>
 

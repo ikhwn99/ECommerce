@@ -2,6 +2,7 @@ package com.ecommerce.EcommerceWebsite.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ecommerce.EcommerceWebsite.model.Cart;
 import com.ecommerce.EcommerceWebsite.model.Order;
 import com.ecommerce.EcommerceWebsite.model.OrderItem;
+import com.ecommerce.EcommerceWebsite.model.Product;
 import com.ecommerce.EcommerceWebsite.model.User;
 import com.ecommerce.EcommerceWebsite.repository.OrderItemRepository;
 import com.ecommerce.EcommerceWebsite.repository.OrderRepository;
+import com.ecommerce.EcommerceWebsite.repository.ProductRepository;
 import com.ecommerce.EcommerceWebsite.repository.UserRepository;
 
 @Service
@@ -28,6 +31,9 @@ public class OrderService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Transactional
     public void createOrder(String custName, int custPhone, String custEmail, String billingAddress, Long userId, String status) {
@@ -53,12 +59,16 @@ public class OrderService {
 
         order.setUser(user);
 
+        // Product product = productRepository.findById(productId)
+        //     .orElseThrow(() -> new RuntimeException("Product not found for id: " + productId));
+
         double totalPrice = 0;
 
         // Create order items
         for (Cart cart : cartItems) {
             OrderItem orderItem = new OrderItem();
-            orderItem.setProductId(cart.getProduct().getId());
+            Long productId = cart.getProduct().getId();
+            orderItem.setProduct(productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found for id: " + productId)));
             int quantity = cart.getQuantity();
             orderItem.setQuantity(quantity);
             double unitPrice = cart.getProduct().getPrice();
@@ -76,6 +86,17 @@ public class OrderService {
         // Save the order and order items
         orderRepository.save(order);
         cartService.clearCartForUser(userId); // Optionally clear the cart after order creation
+    }
+
+    public Order getOrderById(Long orderId) {
+        Optional <Order> optional = orderRepository.findById(orderId);
+        Order order = null;
+        if (optional.isPresent()) {
+            order = optional.get();
+        } else {
+            throw new RuntimeException(" Order not found for id :: " + orderId);
+        }
+        return order;
     }
 
     public List<Order> getOrderByUserId(Long userId) {

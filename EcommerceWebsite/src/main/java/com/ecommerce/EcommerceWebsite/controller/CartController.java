@@ -71,6 +71,7 @@ public class CartController {
         Long userId = customUserDetails.getId();
 
         List<Cart> carts = cartService.getCartByUserId(userId);
+        
         model.addAttribute("carts", carts);
         
         return "cart";

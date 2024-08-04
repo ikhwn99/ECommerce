@@ -65,7 +65,7 @@
                     <a class="nav-link active ms-2" aria-current="page" th:href="@{/cart}"><i class="fa-solid fa-cart-shopping"></i></a>
                 </li>
                 <li class="nav-item ml-3">
-                    <a class="nav-link active" aria-current="page" th:href="@{/my_orders}">My Orders</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/my-orders}">My Orders</a>
                 </li>
                 <li class="nav-item d-flex align-items-center">
                     <!-- <a class="nav-link active" aria-current="page" href="/register">REGISTER</a> -->
@@ -97,7 +97,7 @@
                             <td th:text="${order.createdAt}"></td>
                             <td th:text="${order.totalPrice}"></td>
                             <td th:text="${order.status}"></td>
-                            <td><button class="btn btn-primary">View Details</button></td>
+                            <td><a th:href="@{/my-order-details/{orderId}(orderId=${order.id})}"><button class="btn btn-primary">View Details</button></a></td>
                         </tr>
                     </tbody>
                 </table>

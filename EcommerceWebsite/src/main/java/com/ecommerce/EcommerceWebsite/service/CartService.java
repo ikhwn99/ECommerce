@@ -72,4 +72,16 @@ public class CartService {
         List<Cart> cartItems = cartRepository.findByUserId(userId);
         cartRepository.deleteAll(cartItems);
     }
+
+    public double calculateTotalPrice(Long userId) {
+        List<Cart> carts = getCartByUserId(userId);
+        
+        double totalPrice = 0;
+
+        for (Cart cart : carts) {
+            totalPrice += cart.getUnitPrice() * cart.getQuantity();
+        }
+
+        return totalPrice;
+    }
 }

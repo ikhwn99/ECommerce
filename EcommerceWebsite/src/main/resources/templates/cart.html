@@ -118,8 +118,8 @@
                             <button type="submit" hidden></button>  
                         </form>
                     </td>
-                    <td th:text="${cart.unitPrice}"></td>
-                    <td th:text="${cart.price}"></td>
+                    <td th:text="${#numbers.formatDecimal(cart.unitPrice, 0, 'COMMA', 2, 'POINT')}"></td>
+                    <td th:text="${#numbers.formatDecimal(cart.price, 0, 'COMMA', 2, 'POINT')}"></td>
                     <td>
                         <form th:action="@{/cart/delete}" method="post" style="display:inline;">
                             <input type="hidden" name="cartItemId" th:value="${cart.id}" />

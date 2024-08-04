@@ -22,7 +22,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime createdAt;
     private String custName;
     private int custPhone;
     private String custEmail;
@@ -30,6 +29,9 @@ public class Order {
     private String status;
 
     double totalPrice;
+
+    private LocalDateTime createdAt;
+    private String formattedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

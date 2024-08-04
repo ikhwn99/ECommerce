@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ecommerce.EcommerceWebsite.model.Order;
 import com.ecommerce.EcommerceWebsite.model.OrderItem;
 import com.ecommerce.EcommerceWebsite.service.OrderItemService;
+import com.ecommerce.EcommerceWebsite.service.OrderService;
 
 @Controller
 public class OrderItemController {
@@ -26,6 +28,9 @@ public class OrderItemController {
     @Autowired
     private OrderItemService orderItemService;
 
+    @Autowired
+    private OrderService orderService;
+
     // Handler method for the endpoint "/my-order-details/{orderId}
     @GetMapping("/my-order-details/{orderId}")
     public String displayMyOrderDetails(@PathVariable Long orderId, Model model, Principal principal) {
@@ -34,6 +39,9 @@ public class OrderItemController {
 
         List<OrderItem> orderItems = orderItemService.getOrderItemByOrderId(orderId);
         model.addAttribute("orderItems", orderItems);
+
+        Order order = orderService.getOrderById(orderId);
+        model.addAttribute("order", order);
 
         return "my_order_detail";
     }

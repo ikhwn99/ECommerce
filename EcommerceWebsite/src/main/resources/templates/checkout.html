@@ -65,10 +65,10 @@
                                     <div class="col-md-4 text-end px-4 d-flex flex-column justify-content-between">
                                         <div>
                                             <span th:text="'x ' + ${cart.quantity}"></span>
-                                            <p th:text="'RM ' + ${cart.unitPrice}"></p>
+                                            <p th:text="'RM ' + ${#numbers.formatDecimal(cart.unitPrice, 0, 'COMMA', 2, 'POINT')}"></p>
                                         </div>
                                         <div>
-                                            <span th:text="'RM ' + ${cart.price}" class="border-top border-dark fw-bold"></span>
+                                            <span th:text="'RM ' + ${#numbers.formatDecimal(cart.price, 0, 'COMMA', 2, 'POINT')}" class="border-top border-dark fw-bold"></span>
                                         </div>
                                     </div>
                                 </div>

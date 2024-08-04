@@ -25,6 +25,12 @@
             border-color: #3d2b1f;
             color: white; /* Text color */
         }
+
+        .btn-chocolate:hover {
+            background-color: #654b38; /* Chocolate color */
+            border-color: #3d2b1f;
+            color: black; /* Text color */
+        }
         
     </style>
 </head>
@@ -126,7 +132,11 @@
                 </tr>
             </table>
             <div class="d-flex justify-content-end py-3">
-                <button class="btn btn-chocolate"><a class="text-decoration-none text-white" th:href="@{/checkout}">Proceed to Checkout</a></button>
+                <button class="btn btn-chocolate" 
+                        th:classappend="${#lists.isEmpty(carts)} ? 'disabled' : ''" 
+                        th:disabled="${#lists.isEmpty(carts)}">
+                    <a class="text-decoration-none" th:classappend="${#lists.isEmpty(carts)} ? 'text-secondary' : 'text-white'" th:href="@{/checkout}">Proceed to Checkout</a>
+                </button>
             </div>
         </div>
 

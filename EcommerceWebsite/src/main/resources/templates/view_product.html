@@ -115,8 +115,8 @@
                         </p>
                         <p class="fs-5 fw-bold">
                             Price : <span style="font-size: larger; font-weight: bold;">RM</span>
-                            <span class="fs-5 fw-bold" th:text="${product.discount_price}"></span>
-                            <span class="fs-6 text-decoration-line-through text-secondary" th:text="${product.price}"></span>
+                            <span class="fs-5 fw-bold" th:text="${#numbers.formatDecimal(product.discount_price, 0, 'COMMA', 2, 'POINT')}"></span>
+                            <span class="fs-6 text-decoration-line-through text-secondary" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}"></span>
                             <span class="fs-6  text-success" th:text="${product.discount + '% off'}"></span>
                         </p>
 

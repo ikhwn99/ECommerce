@@ -66,6 +66,12 @@ public class OrderController {
 
     @GetMapping("/my-orders") //GetMapping to index.html
     public String displayOrderById(Model model, Principal principal){
+
+        //to get user detail when appear "welcome user's name"
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("userdetail", userDetails);
+
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new UsernameNotFoundException("User not authenticated");

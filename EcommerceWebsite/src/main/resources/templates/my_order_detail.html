@@ -58,16 +58,22 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/register">REGISTER</a>
                         </li> -->
-        <!--                <li class="nav-item d-flex align-items-center ms-3"><span class="text-white" th:text="'Welcome ' + ${userdetail.fullname}"></span></li>-->
-                        <li class="nav-item">
-                            <a class="nav-link active ms-2" aria-current="page" th:href="@{/cart}"><i class="fa-solid fa-cart-shopping"></i></a>
+<!--                        <li class="nav-item d-flex align-items-center ms-3"><span class="text-white" th:text="'Welcome ' + ${userdetail.fullname}"></span></li>-->
+                        <li class="nav-item d-flex align-items-center mx-5">
+                            <span class="text-white" th:text="'Hi, ' + ${userdetail.fullname}"></span>
                         </li>
-                        <li class="nav-item ml-3">
-                            <a class="nav-link active" aria-current="page" th:href="@{/my-orders}">My Orders</a>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active ms-2" aria-current="page" th:href="@{/cart}">
+                                <i class="fa-solid fa-cart-shopping me-1"></i>My Cart</a>
                         </li>
-                        <li class="nav-item d-flex align-items-center">
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" th:href="@{/my-orders}">
+                                <i class="fa-solid fa-bag-shopping me-1"></i>My Orders</a>
+                        </li>
+                        <li class="nav-item d-flex align-items-center mx-2">
                             <!-- <a class="nav-link active" aria-current="page" href="/register">REGISTER</a> -->
-                            <a class="text-white text-decoration-none" th:href="@{/logout}"><i class="fa-solid fa-sign-out"></i></a>
+                            <a class="text-white text-decoration-none" th:href="@{/logout}">
+                                <i class="fa-solid fa-sign-out"></i></a>
                         </li>
         
                     </ul>
@@ -82,11 +88,11 @@
                         <table class="table table-bordered card-sh">
                             <thead >
                             <tr >
-                                <th scope="col">Order Id</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">unit Price</th>
-                                <th scope="col">price</th>
-                                <th scope="col">product id</th>
+                                <th scope="col">Order ID</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Unit Price</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Product ID</th>
                                 <th scope="col">Image</th>
                             </tr>
                             </thead>

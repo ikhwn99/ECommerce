@@ -14,6 +14,19 @@
           integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .btn-chocolate1 {
+            background-color: #3d2b1f; /* Chocolate color */
+            border-color: #3d2b1f;
+            color: white; /* Text color */
+        }
+        .btn-chocolate1:hover {
+        background-color: green;
+        }
+        .btn-round {
+        border-radius: 12px; /* Adjust the value as needed for more or less rounding */
+        }
+    </style>
 </head>
 <body>
 
@@ -61,11 +74,16 @@
                     <a class="nav-link active" aria-current="page" href="/register">REGISTER</a>
                 </li> -->
 <!--                <li class="nav-item d-flex align-items-center ms-3"><span class="text-white" th:text="'Welcome ' + ${userdetail.fullname}"></span></li>-->
-                <li class="nav-item">
-                    <a class="nav-link active ms-2" aria-current="page" th:href="@{/cart}"><i class="fa-solid fa-cart-shopping"></i></a>
+                <li class="nav-item d-flex align-items-center mx-5">
+                    <span class="text-white" th:text="'Hi, ' + ${userdetail.fullname}"></span>
                 </li>
-                <li class="nav-item ml-3">
-                    <a class="nav-link active" aria-current="page" th:href="@{/my-orders}">My Orders</a>
+                <li class="nav-item mx-2">
+                    <a class="nav-link active ms-2" aria-current="page" th:href="@{/cart}">
+                        <i class="fa-solid fa-cart-shopping"></i>My Cart</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link active" aria-current="page" th:href="@{/my-orders}">
+                        <i class="fa-solid fa-bag-shopping me-1"></i>My Orders</a>
                 </li>
                 <li class="nav-item d-flex align-items-center">
                     <!-- <a class="nav-link active" aria-current="page" href="/register">REGISTER</a> -->
@@ -97,7 +115,11 @@
                             <td th:text="${order.createdAt}"></td>
                             <td th:text="${order.totalPrice}"></td>
                             <td th:text="${order.status}"></td>
-                            <td><a th:href="@{/my-order-details/{orderId}(orderId=${order.id})}"><button class="btn btn-primary">View Details</button></a></td>
+                            <td>
+                                <a th:href="@{/my-order-details/{orderId}(orderId=${order.id})}">
+                                    <button class="btn-chocolate1 btn-primary btn-round">View Details</button>
+                                </a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

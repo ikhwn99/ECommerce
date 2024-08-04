@@ -17,12 +17,16 @@ import com.ecommerce.EcommerceWebsite.service.OrderItemService;
 
 @Controller
 public class OrderItemController {
+
+    // Autowired annotation used for dependency injection of UserDetailsService
     @Autowired
     private UserDetailsService userDetailsService;
 
+    // Autowired annotation used for dependency injection of OrderItemService
     @Autowired
     private OrderItemService orderItemService;
 
+    // Handler method for the endpoint "/my-order-details/{orderId}
     @GetMapping("/my-order-details/{orderId}")
     public String displayMyOrderDetails(@PathVariable Long orderId, Model model, Principal principal) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());

@@ -71,7 +71,7 @@ public class OrderService {
             orderItem.setProduct(productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found for id: " + productId)));
             int quantity = cart.getQuantity();
             orderItem.setQuantity(quantity);
-            double unitPrice = cart.getProduct().getPrice();
+            double unitPrice = cart.getProduct().getDiscount_price();
             orderItem.setUnitPrice(unitPrice);
             orderItem.setTotalPrice(unitPrice * quantity);
             orderItem.setOrder(order);

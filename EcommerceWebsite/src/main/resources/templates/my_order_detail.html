@@ -64,10 +64,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                    <a class="nav-link" aria-current="page" th:href="@{/}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/product">Products</a>
+                    <a class="nav-link" aria-current="page" href="/product">Products</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
@@ -84,7 +84,7 @@
                     <span class="text-white" th:text="'Hi, ' + ${userdetail.fullname}"></span>
                 </li>
                 <li class="nav-item mx-2">
-                    <a class="nav-link active ms-2" aria-current="page" th:href="@{/cart}">
+                    <a class="nav-link ms-2" aria-current="page" th:href="@{/cart}">
                         <i class="fa-solid fa-cart-shopping me-1"></i>My Cart</a>
                 </li>
                 <li class="nav-item mx-2">
@@ -92,8 +92,8 @@
                         <i class="fa-solid fa-bag-shopping me-1"></i>My Orders</a>
                 </li>
                 <li class="nav-item d-flex align-items-center mx-2">
-                    <a class="text-white text-decoration-none" th:href="@{/logout}">
-                        <i class="fa-solid fa-sign-out"></i></a>
+                    <a class="nav-link text-secondary text-decoration-none" th:href="@{/logout}">
+                        <i class="fa-solid fa-sign-out"></i>Logout</a>
                 </li>
             </ul>
         </div>
@@ -106,16 +106,10 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <!-- <th scope="col">Order ID</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Unit Price</th>
-                    <th scope="col">Total Price</th>
-                    <th scope="col">Product ID</th>
-                    <th scope="col">Image</th> -->
                     <th colspan="2">Product</th>
-                    <th class="text-end">Quantity</th>
-                    <th class="text-end">Unit Price</th>
-                    <th class="text-end">Total Price</th>
+                    <th class="text-center col-md-1">Quantity</th>
+                    <th class="text-end col-md-2">Unit Price</th>
+                    <th class="text-end col-md-2">Total Price</th>
                 </tr>
             </thead>
             <tbody class="align-middle">
@@ -124,22 +118,14 @@
                         <span th:text="${orderItem.id}" hidden></span>
                         <img th:src="@{'/img/obsb/' + ${orderItem.product.image}}" alt="" class="w-100">
                     </td>
-                    <td>
+                    <td class="col-md-6">
                         <h5 th:text="${orderItem.product.title}"></h5>
                         <h6 th:text="${orderItem.product.category}"></h6>
                         <span th:text="${orderItem.product.description}"></span>
                     </td>
-                    <td th:text="${orderItem.quantity}" class="text-end"></td>
-                    <td th:text="'RM ' + ${orderItem.unitPrice}" class="text-end"></td>
-                    <td th:text="'RM ' + ${orderItem.totalPrice}" class="text-end"></td>
-                    <!-- <td th:text="${orderItem.id}"></td>
-                    <td th:text="${orderItem.quantity}"></td>
-                    <td th:text="${orderItem.unitPrice}"></td>
-                    <td th:text="${orderItem.totalPrice}"></td>
-                    <td th:text="${orderItem.product.id}"></td>
-                    <td>
-                        <img th:src="@{'/img/obsb/' + ${orderItem.product.image}}" alt="Product Image" class="w-100">
-                    </td> -->
+                    <td th:text="'x'+${orderItem.quantity}" class="text-center"></td>
+                    <td th:text="'RM ' + ${#numbers.formatDecimal(orderItem.unitPrice, 0, 'COMMA', 2, 'POINT')}" class="text-end"></td>
+                    <td th:text="'RM ' + ${#numbers.formatDecimal(orderItem.totalPrice, 0, 'COMMA', 2, 'POINT')}" class="text-end"></td>
                 </tr>
                 <tr style="background-color: #69584d;">
                     <td colspan="4" class="text-end">
@@ -147,7 +133,7 @@
                     </td>
                     <td class="d-flex align-items-end justify-content-end">
                         <span class="me-2 fw-bold">RM </span>
-                        <h3 th:text="${order.totalPrice}" class="text-end mb-0"></h3>
+                        <h3 th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 2, 'POINT')}" class="text-end mb-0"></h3>
                     </td>
                 </tr>
             </tbody>

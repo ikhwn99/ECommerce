@@ -50,8 +50,14 @@ public class ProductController {
 		List<Product> listProducts = productService.searchProduct(ch);
 		model.addAttribute("listProducts", listProducts);
 		return "product";
-
 	}
+
+    @GetMapping("/searchunauthenticated")
+    public String searchProduct(@RequestParam String ch,Model model) {
+        List<Product> listProducts = productService.searchProduct(ch);
+        model.addAttribute("listProducts", listProducts);
+        return "product";
+    }
 
     @GetMapping("/showNewProductForm")
     public String showNewProductForm(Model model) {

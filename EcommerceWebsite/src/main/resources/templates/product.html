@@ -109,7 +109,7 @@
 		<div class="container-fluid bg-dark-chocolate p-5 mt-5">
 			<div class="row">
 				<div class="col-md-8 offset-md-2">
-					<form action="search" method="get">
+					<form th:action="${userdetail != null ? '/search' : '/searchunauthenticated'}" method="get">
 						<div class="input-group">
 							<input type="text" class="form-control" name="ch">
 							<button class="btn-chocolate1 ms-3 col-md-2"><i class="fa-solid fa-magnifying-glass"></i>Search</button>

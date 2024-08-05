@@ -51,18 +51,40 @@
                     </li>
                 </ul>
 
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0" th:unless="${userdetail}">
+                    <li class="nav-item d-flex align-items-center mx-5">
+                        <span class="text-white">Welcome guest!</span>
+                    </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/login"><i
+                        <a class="nav-link active" aria-current="page" th:href="@{/login}"><i
                                 class="fa-solid fa-right-to-bracket">&nbsp;</i>LOGIN</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/register">REGISTER</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/register}"> | </a>
                     </li>
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-cart-shopping"></i></a>-->
-<!--                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/register}">REGISTER</a>
+                    </li>
+                </ul>
 
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0" th:if="${userdetail}">
+                    <li class="nav-item d-flex align-items-center mx-5">
+                        <span class="text-white" th:text="'Hi, ' + ${userdetail.fullname}"></span>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link active ms-2" aria-current="page" th:href="@{/cart}">
+                            <i class="fa-solid fa-cart-shopping me-1"></i>My Cart</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link active" aria-current="page" th:href="@{/my-orders}">
+                            <i class="fa-solid fa-bag-shopping me-1"></i>My Orders
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center mx-2">
+                        <a class="text-white text-decoration-none" th:href="@{/logout}">
+                            <i class="fa-solid fa-sign-out"></i>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

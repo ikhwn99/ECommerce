@@ -3,7 +3,7 @@
       th:replace="~{base::layout(~{::section})}">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Insert title here</title>
+    <title>Checkout</title>
 </head>
 <body>
 <section>
@@ -11,10 +11,7 @@
     <div class="container mt-5 p-5">
         <form th:action="@{/checkout}" method="post">
             <div class="row" th:object="${userdetail}">
-
                 <div class="col-md-6">
-
-
                     <div class="mb-3 row">
                         <p class="text-center fs-4">Billing Address</p>
                         <hr>

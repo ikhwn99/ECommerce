@@ -1,3 +1,4 @@
+<!-- From @GetMapping("/checkout") in OrderController.java -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{base::layout(~{::section})}">
@@ -25,7 +26,8 @@
     <div class="container mt-5 p-5">
 
         <!-- Start: Form for Customer detail -->
-        <form th:action="@{/checkout}" method="post">
+        <!-- @PostMapping("/checkout") in OrderController.java -->
+        <form th:action="@{/checkout}" method="post"> 
             <div class="row" th:object="${userdetail}">
                 <div class="col-md-6">
 
@@ -47,7 +49,7 @@
                         </div>
                         <div class="col p-1">
                             <label>Mobile Number</label> 
-                            <input type="text" name="mobileNo" required class="form-control col ms-2" th:field="${userdetail.phone}">
+                            <input type="text" name="phone" required class="form-control col ms-2" th:value="'0' + ${userdetail.phone}">
                         </div>
                     </div>
 
@@ -71,12 +73,18 @@
                             <!-- Display the detail for each item(s) in cart -->
                             <div th:each="cart : ${carts}"> 
                                 <div class="border my-2 px-3 py-3 d-flex">
+
+                                    <!-- Product Image -->
                                     <div class="col-md-2 me-3">
                                         <img th:src="@{'/img/obsb/'+${cart.product.image}}" alt="" class="w-100">
                                     </div>
+
+                                    <!-- Product Name -->
                                     <div class="col-md-6">
                                         <p th:text="${cart.product.title}" class="fw-bold"></p>
                                     </div>
+
+                                    <!-- Product Quantity, Unit Price and Total Price for each item-->
                                     <div class="col-md-4 text-end px-4 d-flex flex-column justify-content-between">
                                         <div>
                                             <span th:text="'x ' + ${cart.quantity}"></span>
@@ -86,30 +94,31 @@
                                             <span th:text="'RM ' + ${#numbers.formatDecimal(cart.price, 0, 'COMMA', 2, 'POINT')}" class="border-top border-dark fw-bold"></span>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
+
+                            <!-- Total Price for all items in cart -->
                             <div class="text-end px-3">
                                 <h5 th:text="'Total: ' + ${totalPrice}"></h5>
                             </div>
+
                         </div>
                     </div>
 
                     <div class="card shadow p-3 mb-5 mt-2 bg-body-tertiary rounded">
 
+                        <!-- Payment select form -->
                         <div class="card-body">
-                            <!-- <form action="/login" method="post"> -->
                             <div class="mb-3">
-                                <label class="form-label">Select Payment Type</label> <select required
-                                                                                              name="paymentType" class="form-control">
-                                <option>--select--</option>
-                                <option value="COD">Cash On Delivery</option>
-                            </select>
-
+                                <label class="form-label">Select Payment Type</label> 
+                                <select required name="paymentType" class="form-control">
+                                    <option>--select--</option>
+                                    <option value="COD">Cash On Delivery</option>
+                                </select>
                             </div>
 
-                            <button type="submit" class="btn bg-primary text-white col-md-12">Place
-                                Order</button>
-
+                            <button type="submit" class="btn bg-primary text-white col-md-12">Place Order</button>
                         </div>
                     </div>
                 </div>
@@ -117,27 +126,6 @@
         </form>
         <!-- End: Form for Customer detail -->
     </div>
-
 </section>
 </body>
 </html>
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form th:action="@{/checkout}" method="post">
-        <div class="form-group">
-            <label for="billingAddress">Billing Address</label>
-            <textarea id="billingAddress" name="billingAddress" class="form-control" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
-    </form>
-    
-</body>
-</html> -->

@@ -60,9 +60,10 @@
                     </li>
                 </ul>
 
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item d-flex align-items-center mx-5">
-						<span class="text-white" th:if="${userdetail}" th:text="'Hi, ' + ${userdetail.fullname}"></span>
+                <!-- If the user already logged in -->
+				<ul class="navbar-nav ms-auto mb-2 mb-lg-0" th:if="${userdetail}">
+					<li class="nav-item d-flex align-items-center mx-5">
+						<span class="text-white" th:text="'Hi, ' + ${userdetail.fullname}"></span>
 					</li>
 					<li class="nav-item mx-2">
 						<a class="nav-link active ms-2" aria-current="page" th:href="@{/cart}">
@@ -70,7 +71,7 @@
                             <span th:text="*{carts_length}" class="badge text-dark" style="background-color: white;"></span></a>
 					</li>
 					<li class="nav-item mx-2">
-						<a class="nav-link active" aria-current="page" th:href="@{/my_orders}">
+						<a class="nav-link active" aria-current="page" th:href="@{/my-orders}">
 							<i class="fa-solid fa-bag-shopping me-1"></i>My Orders
 						</a>
 					</li>
@@ -79,8 +80,25 @@
 							<i class="fa-solid fa-sign-out"></i>
 						</a>
 					</li> 
+				</ul>
 
-                </ul>
+				<!-- If user is not logged in -->
+				<ul class="navbar-nav ms-auto mb-2 mb-lg-0" th:unless="${userdetail}">
+					<li class="nav-item d-flex align-items-center mx-5">
+						<span class="text-white">Welcome guest!</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/login}"><i
+								class="fa-solid fa-right-to-bracket">&nbsp;</i>LOGIN</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/register}"> | </a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/register}">REGISTER</a>
+					</li>
+				</ul>
+
             </div>
         </div>
     </nav>
@@ -110,7 +128,7 @@
 
                             <span class="badge bg-warning" th:text="${product.stock} < 0 ? 'Out of Stock' : ''"></span>
 
-                            <span th:if="*{stock < 11}">
+                            <span th:if="${product.stock < 11}">
                                 <span th:text="${product.stock} + ' unit(s) left'" class="text-danger"></span>
                             </span>
 

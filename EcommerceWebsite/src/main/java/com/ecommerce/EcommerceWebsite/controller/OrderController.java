@@ -39,23 +39,29 @@ public class OrderController {
     @Autowired
     private OrderItemService orderItemService;
 
+    // Handling requests to the '/checkout' endpoint
     @GetMapping("/checkout")
     public String displayCheckoutPage(Model model, Principal principal) {
+        // Retrieve the details of the currently authenticated user
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         model.addAttribute("userdetail", userDetails);
 
+        // Check if the user is authenticated. If the user is not authenticated, it will throws an exception to ensure that only authenticated users can access the checkout page
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new UsernameNotFoundException("User not authenticated");
         }
 
+        // Get the userId by 'CustomeUserDetails' from the 'Authentication' object
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         Long userId = customUserDetails.getId();
 
+        // Retrieves the list of cart items based on user id. Added the list to the model with the attributes name 'carts'
         List<Cart> carts = cartService.getCartByUserId(userId);
-        double totalPrice = cartService.calculateTotalPrice(userId);
-        
         model.addAttribute("carts", carts);
+
+        // Calculates the total price of the items in the cart by calling the method calculateTotalPrice(Long userId) from Cart Service. Added the totalPrice data to the model attribute name 'totalPrice'
+        double totalPrice = cartService.calculateTotalPrice(userId);
         model.addAttribute("totalPrice", totalPrice);
 
         model.addAttribute("carts_length", carts.size());

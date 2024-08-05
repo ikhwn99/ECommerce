@@ -70,6 +70,7 @@
                     <li class="nav-item mx-2">
                         <a class="nav-link" th:href="@{/cart}">
                             <i class="fa-solid fa-cart-shopping"></i> My Cart
+                            <span th:text="*{carts_length}" class="badge text-dark" style="background-color: white;"></span>
                         </a>
                     </li>
                     <li class="nav-item mx-2">

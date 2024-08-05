@@ -3,9 +3,15 @@ package com.ecommerce.EcommerceWebsite.controller;
 import java.security.Principal;
 import java.util.List;
 
+import com.ecommerce.EcommerceWebsite.config.CustomUserDetails;
+import com.ecommerce.EcommerceWebsite.model.Cart;
+import com.ecommerce.EcommerceWebsite.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -22,6 +28,9 @@ public class ProductController {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private CartService cartService;
+
     // @GetMapping("/product") 
     // public String viewProductPage(Model model, Principal principal) {
     //     model.addAttribute("listProducts", productService.getAllProducts());
@@ -36,10 +45,22 @@ public class ProductController {
         if(principal != null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
             model.addAttribute("userdetail", userDetails);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication == null || !authentication.isAuthenticated()) {
+                throw new UsernameNotFoundException("User not authenticated");
+            }
+
+            CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+            Long userId = customUserDetails.getId();
+
+            List<Cart> carts = cartService.getCartByUserId(userId);
+
+            model.addAttribute("carts_length", carts.size());
         } else model.addAttribute("userdetail", null);
 		List<Product> listProducts = productService.getAllActiveProducts(category);
 		model.addAttribute("listProducts", listProducts);
 		model.addAttribute("paramValue", category);
+
 		return "product";
 	}
 
@@ -84,6 +105,17 @@ public class ProductController {
         }
 
         model.addAttribute("product", product);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new UsernameNotFoundException("User not authenticated");
+        }
+
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        Long userId = customUserDetails.getId();
+
+        List<Cart> carts = cartService.getCartByUserId(userId);
+
+        model.addAttribute("carts_length", carts.size());
         return "view_product";
     }
 

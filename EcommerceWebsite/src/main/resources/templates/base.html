@@ -12,6 +12,20 @@
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        .btn-chocolate1 {
+            background-color: #3d2b1f;
+            border-color: #3d2b1f;
+            color: white;
+        }
+        .btn-chocolate1:hover {
+            background-color: #5a3a28;
+        }
+        .btn-round {
+            border-radius: 12px;
+        }
+    </style>
 </head>
 
 <body>
@@ -51,6 +65,27 @@
                     </li>
                 </ul>
 
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0" th:if="${userdetail}">
+                    <li class="nav-item d-flex align-items-center mx-5">
+                        <span class="text-white" th:text="'Hi, ' + ${userdetail.fullname}"></span>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link active ms-2" aria-current="page" th:href="@{/cart}">
+                            <i class="fa-solid fa-cart-shopping me-1"></i>My Cart
+                            <span th:text="*{carts_length}" class="badge text-dark" style="background-color: white;"></span></a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link active" aria-current="page" th:href="@{/my-orders}">
+                            <i class="fa-solid fa-bag-shopping me-1"></i>My Orders
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center mx-2">
+                        <a class="text-white text-decoration-none" th:href="@{/logout}">
+                            <i class="fa-solid fa-sign-out"></i>
+                        </a>
+                    </li>
+                </ul>
+
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0" th:unless="${userdetail}">
                     <li class="nav-item d-flex align-items-center mx-5">
                         <span class="text-white">Welcome guest!</span>
@@ -64,26 +99,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" th:href="@{/register}">REGISTER</a>
-                    </li>
-                </ul>
-
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0" th:if="${userdetail}">
-                    <li class="nav-item d-flex align-items-center mx-5">
-                        <span class="text-white" th:text="'Hi, ' + ${userdetail.fullname}"></span>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link active ms-2" aria-current="page" th:href="@{/cart}">
-                            <i class="fa-solid fa-cart-shopping me-1"></i>My Cart</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link active" aria-current="page" th:href="@{/my-orders}">
-                            <i class="fa-solid fa-bag-shopping me-1"></i>My Orders
-                        </a>
-                    </li>
-                    <li class="nav-item d-flex align-items-center mx-2">
-                        <a class="text-white text-decoration-none" th:href="@{/logout}">
-                            <i class="fa-solid fa-sign-out"></i>
-                        </a>
                     </li>
                 </ul>
             </div>

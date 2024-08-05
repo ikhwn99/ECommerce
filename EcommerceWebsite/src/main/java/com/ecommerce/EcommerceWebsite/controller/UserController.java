@@ -1,16 +1,23 @@
 package com.ecommerce.EcommerceWebsite.controller;
 
+import com.ecommerce.EcommerceWebsite.config.CustomUserDetails;
 import com.ecommerce.EcommerceWebsite.config.CustomUserDetailsService;
 import com.ecommerce.EcommerceWebsite.dto.UserDto;
+import com.ecommerce.EcommerceWebsite.model.Cart;
 import com.ecommerce.EcommerceWebsite.model.PasswordResetToken;
 import com.ecommerce.EcommerceWebsite.model.User;
 import com.ecommerce.EcommerceWebsite.repository.TokenRepository;
 
 import java.security.Principal;
+import java.util.List;
 
+import com.ecommerce.EcommerceWebsite.service.CartService;
 import com.ecommerce.EcommerceWebsite.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +38,27 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private CartService cartService;
+
     @GetMapping("/")
     public String home(Model model, Principal principal) {
         if(principal != null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
             model.addAttribute("userdetail", userDetails);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication == null || !authentication.isAuthenticated()) {
+                throw new UsernameNotFoundException("User not authenticated");
+            }
+
+            CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+            Long userId = customUserDetails.getId();
+
+            List<Cart> carts = cartService.getCartByUserId(userId);
+
+            model.addAttribute("carts_length", carts.size());
         }else model.addAttribute("userdetail", null);
+
         return "index";
     }
 

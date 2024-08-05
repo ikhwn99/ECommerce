@@ -57,6 +57,8 @@ public class OrderController {
         
         model.addAttribute("carts", carts);
         model.addAttribute("totalPrice", totalPrice);
+
+        model.addAttribute("carts_length", carts.size());
         return "checkout";
     }
 
@@ -111,6 +113,10 @@ public class OrderController {
 
         model.addAttribute("orders", orders);
         model.addAttribute("orderItemsMap", orderItemsMap);
+
+        List<Cart> carts = cartService.getCartByUserId(userId);
+
+        model.addAttribute("carts_length", carts.size());
 
         return "my_orders";
     }

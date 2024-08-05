@@ -109,6 +109,10 @@
 
                             <span class="badge bg-warning" th:text="${product.stock} < 0 ? 'Out of Stock' : ''"></span>
 
+                            <span th:if="*{stock < 11}">
+                                <span th:text="${product.stock} + ' unit(s) left'" class="text-danger"></span>
+                            </span>
+
 
                             <br> Category: <span th:text="${product.category}"></span><br> Policy : 7
                             Days Replacement & Return
@@ -141,10 +145,13 @@
                             <input type="hidden" name="product_id" th:value="*{id}">
                             <input type="hidden" name="product_name" th:value="*{title}">
                             <input type="hidden" name="price" th:value="*{discount_price}">
+                            <input type="hidden" name="price" th:value="*{stock}">
                             <!-- <input type="hidden" name="created_at" th:value="2024-07-31 10:00:00"> -->
+                            
                             <div class="d-flex justify-content-between">
+                                
                                 <div class="col-md-4">
-                                    <input type="number" class="form-control" name="quantity" id="" min="1" value="1">
+                                    <input type="number" class="form-control" name="quantity" id="" min="1" th:max="*{stock}" value="1">
                                 </div>
                                 <div class="col-md-6">
                                     <!-- <a th:href="@{/cart}" class="btn btn-danger w-100">Add To Cart</a> -->

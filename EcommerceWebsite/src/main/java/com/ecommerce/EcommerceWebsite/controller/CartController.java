@@ -31,9 +31,6 @@ public class CartController {
     private CartService cartService;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private ProductRepository productRepository;
 
     @Autowired
@@ -41,20 +38,6 @@ public class CartController {
 
     @Autowired
     private UserService userService;
-
-    // @GetMapping("cart/{id}")
-    // public String displayCart(@PathVariable(value = "id") Long id, Model model) {
-    //     Cart cart = cartService.getCartById(id);
-    //     model.addAttribute("cart", cart);
-    //     return "cart";
-    // }
-
-    // @GetMapping("cart/user/{userId}")
-    // public String displayCartByUser(@PathVariable(value = "userId") Long userId, Model model) {
-    //     List<Cart> carts = cartService.getCartByUserId(userId);
-    //     model.addAttribute("carts", carts);
-    //     return "cart"; // Ensure you have a cart.html template that can handle a list of carts
-    // }
 
     // Display cart by user id
     @GetMapping("cart")
@@ -121,36 +104,5 @@ public class CartController {
         cartService.deleteCartById(cartItemId);
         return "redirect:/cart"; // Redirect to the cart page after deletion
     }
-
-//    @GetMapping("/my-orders")
-//    public String viewOrders() {
-//        return "my_orders"; // This should match the name of your HTML file without the .html extension
-//    }
-
-    // @PostMapping("cart")
-    // public String saveCart(@ModelAttribute("cart") Cart cart, @RequestParam("user_id") Long userId, @RequestParam("product_id") Long productId, @RequestParam("price") double price, @RequestParam("quantity") int quantity, @RequestParam("product_name") String name) {
-
-    //     User user = userRepository.findById(userId)
-    //         .orElseThrow(() -> new RuntimeException("User not found for id: " + userId));
-    //     Product product = productRepository.findById(productId)
-    //         .orElseThrow(() -> new RuntimeException("Product not found for id: " + productId));
-        
-    //     cart.setProductName(name);
-    //     cart.setUser(user);
-    //     cart.setProduct(product);
-    //     cart.setUnitPrice(price);
-    //     cart.setPrice(price*quantity);
-
-    //     cartService.updateCart(cart);
-    //     return "redirect:/cart";
-    // }
-    
-
-    // @PostMapping("/cart")
-    // public String saveEmployee(@ModelAttribute("employee") Employee employee) {
-    //     // save employee to database
-    //     employeeService.saveEmployee(employee);
-    //     return "redirect:/employee";
-    // }
     
 }

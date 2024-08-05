@@ -42,8 +42,6 @@
 </head>
 
 <body>
-    <!-- Start Navbar -->
-<!--    <nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-dark">-->
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark navbar-chocolate">
         <div class="container-fluid">
             <a class="navbar-brand" href="#"><i class="fa-solid fa-shopping-bag">&nbsp;</i>BEAUTY DECK</a>
@@ -119,21 +117,14 @@
                         <form th:action="@{/cart/updateQty}" method="post">
                             <input type="hidden" class="form-control" name="product_id" th:value="${cart.product.id}">
                             <input type="hidden" class="form-control" name="user_id" th:value="${userdetail.id}">
-                            <input type="number" class="form-control" name="quantity" th:value="${cart.quantity}" onchange="updateQty(this)">
+                            <input type="number" class="form-control" name="quantity" min="1" th:max="*{cart.product.stock}" th:value="${cart.quantity}" onchange="updateQty(this)">
+                            <div th:if="*{cart.product.stock < 11}">
+                                <span th:text="*{cart.product.stock} + ' unit(s) left'" class="text-danger fw-light"></span>
+                            </div>
                             <input type="hidden" class="form-control" name="unit_price" th:value="${cart.unitPrice}">
                             <button type="submit" hidden></button>  
                         </form>
                     </td>
-
-                   
-<!--                    <td>-->
-<!--                        <form th:action="@{/cart/delete}" method="post" style="display:inline;">-->
-<!--                            <input type="hidden" name="cartItemId" th:value="${cart.id}" />-->
-<!--                            <button type="submit" class="delete-btn" title="Delete">-->
-<!--                                <i class="fas fa-trash"></i>-->
-<!--                            </button>-->
-<!--                        </form>-->
-<!--                    </td>-->
 
                     <td th:text="${#numbers.formatDecimal(cart.unitPrice, 0, 'COMMA', 2, 'POINT')}"></td>
                     <td th:text="${#numbers.formatDecimal(cart.price, 0, 'COMMA', 2, 'POINT')}"></td>
@@ -172,10 +163,6 @@
         }
     </script>
     
-    <!-- Start Footer -->
-<!--    <div class="container-fluid p-1 bg-primary text-center text-white" style="margin-top: 100px">-->
-<!--        <p>Beauty Shoppe</p>-->
-<!--    </div>-->
     <div class="container-fluid p-4 text-center text-white navbar-chocolate mt-auto" style="margin-top: 100px">
         <div class="row">
             <div class="col">
@@ -194,7 +181,6 @@
                 </a>
             </div>
         </div>
-<!--        <p><i class="fa-solid fa-shopping-bag">BEAUTY DECK</p>-->
         <p><i class="fa-solid fa-shopping-bag"></i> BEAUTY DECK</p>
 
     </div>

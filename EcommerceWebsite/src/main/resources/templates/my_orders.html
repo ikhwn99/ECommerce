@@ -90,13 +90,13 @@
     <!-- Main Content -->
     <section class="container mt-5 pt-5">
         <h1 class="text-center mb-4">My Orders</h1>
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped align-middle">
             <thead>
                 <tr class="text-center">
                     <!-- <th scope="col">Order ID</th> -->
                     <th scope="col">Date</th>
                     <th scope="col">Items</th>
-                    <th scope="col">Price</th>
+                    <th scope="col">Total Price</th>
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>
                 </tr>
@@ -108,10 +108,12 @@
                     <td th:text="${order.formattedDate}"></td>
                     <!-- <td th:text="${#numbers.formatDecimal(order.totalPrice, 2, 'COMMA', 'POINT')}"></td> -->
                     <td >
-                        <div th:each="orderItem : ${orderItemsMap[order.id]}" class="d-flex justify-content-between px-3">
-                            <div th:text="${orderItem.product.title}"></div>
-                            <div th:text="'x' + ${orderItem.quantity}"></div>
-                        </div>
+                        <ul th:each="orderItem : ${orderItemsMap[order.id]}">
+                            <li class="d-flex justify-content-between px-2">
+                                <span th:text="${orderItem.product.title}"></span>
+                                <span th:text="'x' + ${orderItem.quantity}"></span>
+                            </li>
+                        </ul>
                     </td>
                     
                     <td th:text="'RM ' + ${#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 2, 'POINT')}"></td>

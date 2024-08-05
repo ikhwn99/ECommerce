@@ -100,12 +100,12 @@
 
     <section>
         <div class="container card-sh" style="margin-top: 70px; margin-bottom: 100px;">
-            <table class="table align-middle">
+            <table class="table align-middle text-center">
                 <tr>
                     <th colspan="2">Product</th>
                     <th>Quantity</th>
-                    <th>Unit Price</th>
-                    <th>Total Price</th>
+                    <th class="text-end">Unit Price</th>
+                    <th class="text-end">Total Price</th>
                     <th>Action</th>
                 </tr>
                 <tr th:each="cart : ${carts}">
@@ -118,7 +118,7 @@
                             <input type="hidden" class="form-control" name="product_id" th:value="${cart.product.id}">
                             <input type="hidden" class="form-control" name="user_id" th:value="${userdetail.id}">
                             <input type="number" class="form-control" name="quantity" min="1" th:max="*{cart.product.stock}" th:value="${cart.quantity}" onchange="updateQty(this)">
-                            <div th:if="*{cart.product.stock < 11}">
+                            <div th:if="*{cart.product.stock < 11}" class="text-start">
                                 <span th:text="*{cart.product.stock} + ' unit(s) left'" class="text-danger fw-light"></span>
                             </div>
                             <input type="hidden" class="form-control" name="unit_price" th:value="${cart.unitPrice}">
@@ -126,8 +126,8 @@
                         </form>
                     </td>
 
-                    <td th:text="${#numbers.formatDecimal(cart.unitPrice, 0, 'COMMA', 2, 'POINT')}"></td>
-                    <td th:text="${#numbers.formatDecimal(cart.price, 0, 'COMMA', 2, 'POINT')}"></td>
+                    <td th:text="'RM ' + ${#numbers.formatDecimal(cart.unitPrice, 0, 'COMMA', 2, 'POINT')}" class="text-end"></td>
+                    <td th:text="'RM ' + ${#numbers.formatDecimal(cart.price, 0, 'COMMA', 2, 'POINT')}" class="text-end"></td>
 
                     <td>
                         <form th:action="@{/cart/delete}" method="post" style="display:inline;">

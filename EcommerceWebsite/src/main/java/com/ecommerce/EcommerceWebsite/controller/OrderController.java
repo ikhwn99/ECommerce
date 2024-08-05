@@ -64,28 +64,33 @@ public class OrderController {
         double totalPrice = cartService.calculateTotalPrice(userId);
         model.addAttribute("totalPrice", totalPrice);
 
+        // Get the total number of item in cart by using method size() for carts object. It will displayed the number of item in cart at the cart icon in navigation bar
         model.addAttribute("carts_length", carts.size());
         return "checkout";
     }
 
+    // Handle the submission of the checkout form from checkout.html
+    // processOrder method retrieve the fullname, email, phone, billingAddress parameter from the request using @RequestParam and binds it to the corresponding variable. principal parameter provides the access to the currently authenticated user's detail
     @PostMapping("/checkout")
     public String processOrder(@RequestParam("fullname") String fullname, @RequestParam("email") String email, @RequestParam("phone") int phone, @RequestParam("billingAddress") String billingAddress, Principal principal) {
+
+        // Get the userId by 'CustomeUserDetails' from the 'Authentication' object
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         Long userId = ((CustomUserDetails) userDetails).getId();
 
-        // Create order with billing address and items from cart
+        // Create order with customer detail including fullname, phone, email and billing address
         orderService.createOrder(fullname, phone, email, billingAddress, userId, "Successful");
 
-        return "success"; // Redirect to an order confirmation page
+        return "success"; 
     }
 
-    @GetMapping("/my-orders") //GetMapping to index.html
+    // Handling requests to the '/my-orders' endpoint
+    @GetMapping("/my-orders")
     public String displayOrderById(Model model, Principal principal){
 
-        //to get user detail when appear "welcome user's name"
+        // Get the userId by 'CustomeUserDetails' from the 'Authentication' object
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         model.addAttribute("userdetail", userDetails);
-
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -97,7 +102,7 @@ public class OrderController {
 
         List<Order> orders = orderService.getOrderByUserId(userId);
 
-        // Format the dates
+        // Changes the date into format dd MMMM yyyy)
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
         for (Order order : orders) {
             order.setFormattedDate(order.getCreatedAt().format(formatter));
@@ -110,12 +115,6 @@ public class OrderController {
             List<OrderItem> orderItems = orderItemService.getOrderItemByOrderId(orderId);
             orderItemsMap.put(orderId, orderItems);
         }
-
-        // for (Order order : orders) {
-        //     Long orderId = order.getId();
-        //     List<OrderItem> orderItems = orderItemService.getOrderItemByOrderId(orderId);
-        //     model.addAttribute("orderItems_"+orderId, orderItems);
-        // }
 
         model.addAttribute("orders", orders);
         model.addAttribute("orderItemsMap", orderItemsMap);

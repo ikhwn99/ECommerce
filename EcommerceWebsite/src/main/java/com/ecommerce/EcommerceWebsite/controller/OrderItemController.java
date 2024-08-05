@@ -1,6 +1,7 @@
 package com.ecommerce.EcommerceWebsite.controller;
 
 import java.security.Principal;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.ecommerce.EcommerceWebsite.config.CustomUserDetails;
@@ -50,6 +51,9 @@ public class OrderItemController {
         model.addAttribute("orderItems", orderItems);
 
         Order order = orderService.getOrderById(orderId);
+        // Changes the date into format dd MMMM yyyy)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+        order.setFormattedDate(order.getCreatedAt().format(formatter));
         model.addAttribute("order", order);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

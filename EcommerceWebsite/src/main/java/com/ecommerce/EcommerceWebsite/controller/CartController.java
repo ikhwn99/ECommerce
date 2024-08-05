@@ -56,6 +56,8 @@ public class CartController {
         List<Cart> carts = cartService.getCartByUserId(userId);
         
         model.addAttribute("carts", carts);
+        model.addAttribute("carts_length", carts.size());
+        
         
         return "cart";
     }

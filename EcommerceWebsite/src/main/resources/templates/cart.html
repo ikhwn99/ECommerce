@@ -80,7 +80,7 @@
 					</li>
 					<li class="nav-item mx-2">
 						<a class="nav-link active ms-2" aria-current="page" th:href="@{/cart}">
-							<i class="fa-solid fa-cart-shopping me-1"></i>My Cart</a>
+							<i class="fa-solid fa-cart-shopping me-1"></i>My Cart <span th:text="*{carts_length}" class="badge text-dark" style="background-color: white;"></span></a>
 					</li>
 					<li class="nav-item mx-2">
 						<a class="nav-link active" aria-current="page" th:href="@{/my-orders}">

@@ -50,8 +50,12 @@
                     <hr>
                     <div class="card">
                         <div class="card-body">
+
+                            <!-- Order Summary -->
                             <div class="card-title">Order Summary</div>
-                            <div th:each="cart : ${carts}">
+
+                            <!-- Display the detail for each item(s) in cart -->
+                            <div th:each="cart : ${carts}"> 
                                 <div class="border my-2 px-3 py-3 d-flex">
                                     <div class="col-md-2 me-3">
                                         <img th:src="@{'/img/obsb/'+${cart.product.image}}" alt="" class="w-100">

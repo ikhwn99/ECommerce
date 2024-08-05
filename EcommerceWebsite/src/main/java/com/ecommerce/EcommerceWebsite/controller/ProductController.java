@@ -102,20 +102,22 @@ public class ProductController {
         if(principal!=null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
             model.addAttribute("userdetail", userDetails);
-        }
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication == null || !authentication.isAuthenticated()) {
+                throw new UsernameNotFoundException("User not authenticated");
+            }
+
+            CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+            Long userId = customUserDetails.getId();
+
+            List<Cart> carts = cartService.getCartByUserId(userId);
+
+            model.addAttribute("carts_length", carts.size());
+        } else model.addAttribute("userdetail", null);
 
         model.addAttribute("product", product);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            throw new UsernameNotFoundException("User not authenticated");
-        }
-
-        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        Long userId = customUserDetails.getId();
-
-        List<Cart> carts = cartService.getCartByUserId(userId);
-
-        model.addAttribute("carts_length", carts.size());
+        
         return "view_product";
     }
 

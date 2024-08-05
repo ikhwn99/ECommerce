@@ -33,6 +33,12 @@
         }
         
     </style>
+    <script>
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this item?");
+        }
+    </script>
+
 </head>
 
 <body>
@@ -120,14 +126,23 @@
                     </td>
                     <td th:text="${cart.unitPrice}"></td>
                     <td th:text="${cart.price}"></td>
+<!--                    <td>-->
+<!--                        <form th:action="@{/cart/delete}" method="post" style="display:inline;">-->
+<!--                            <input type="hidden" name="cartItemId" th:value="${cart.id}" />-->
+<!--                            <button type="submit" class="delete-btn" title="Delete">-->
+<!--                                <i class="fas fa-trash"></i>-->
+<!--                            </button>-->
+<!--                        </form>-->
+<!--                    </td>-->
                     <td>
                         <form th:action="@{/cart/delete}" method="post" style="display:inline;">
                             <input type="hidden" name="cartItemId" th:value="${cart.id}" />
-                            <button type="submit" class="delete-btn" title="Delete">
+                            <button type="submit" class="delete-btn" title="Delete" onclick="return confirmDelete();">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
                     </td>
+
 
                 </tr>
             </table>

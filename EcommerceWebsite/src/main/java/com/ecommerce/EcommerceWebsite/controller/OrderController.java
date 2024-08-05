@@ -2,7 +2,9 @@ package com.ecommerce.EcommerceWebsite.controller;
 
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ecommerce.EcommerceWebsite.config.CustomUserDetails;
 import com.ecommerce.EcommerceWebsite.model.Cart;
 import com.ecommerce.EcommerceWebsite.model.Order;
+import com.ecommerce.EcommerceWebsite.model.OrderItem;
 import com.ecommerce.EcommerceWebsite.repository.OrderRepository;
 import com.ecommerce.EcommerceWebsite.service.*;
 
@@ -32,6 +35,9 @@ public class OrderController {
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private OrderItemService orderItemService;
 
     @GetMapping("/checkout")
     public String displayCheckoutPage(Model model, Principal principal) {
@@ -89,7 +95,22 @@ public class OrderController {
             order.setFormattedDate(order.getCreatedAt().format(formatter));
         }
 
+        // Create a map to store order items by order ID
+        Map<Long, List<OrderItem>> orderItemsMap = new HashMap<>();
+        for (Order order : orders) {
+            Long orderId = order.getId();
+            List<OrderItem> orderItems = orderItemService.getOrderItemByOrderId(orderId);
+            orderItemsMap.put(orderId, orderItems);
+        }
+
+        // for (Order order : orders) {
+        //     Long orderId = order.getId();
+        //     List<OrderItem> orderItems = orderItemService.getOrderItemByOrderId(orderId);
+        //     model.addAttribute("orderItems_"+orderId, orderItems);
+        // }
+
         model.addAttribute("orders", orders);
+        model.addAttribute("orderItemsMap", orderItemsMap);
 
         return "my_orders";
     }

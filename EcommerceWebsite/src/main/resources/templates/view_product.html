@@ -109,6 +109,10 @@
 
                             <span class="badge bg-warning" th:text="${product.stock} < 0 ? 'Out of Stock' : ''"></span>
 
+                            <span th:if="*{stock < 11}">
+                                <span th:text="${product.stock} + ' unit(s) left'" class="text-danger"></span>
+                            </span>
+
 
                             <br> Category: <span th:text="${product.category}"></span><br> Policy : 7
                             Days Replacement & Return
@@ -143,9 +147,7 @@
                             <input type="hidden" name="price" th:value="*{discount_price}">
                             <input type="hidden" name="price" th:value="*{stock}">
                             <!-- <input type="hidden" name="created_at" th:value="2024-07-31 10:00:00"> -->
-                            <div th:if="*{stock < 11}">
-                                <span th:text="*{stock} + ' unit(s) left'" class="text-danger"></span>
-                            </div>
+                            
                             <div class="d-flex justify-content-between">
                                 
                                 <div class="col-md-4">

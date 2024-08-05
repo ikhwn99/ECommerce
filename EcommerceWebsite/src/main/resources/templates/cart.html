@@ -118,6 +118,9 @@
                             <input type="hidden" class="form-control" name="product_id" th:value="${cart.product.id}">
                             <input type="hidden" class="form-control" name="user_id" th:value="${userdetail.id}">
                             <input type="number" class="form-control" name="quantity" min="1" th:max="*{cart.product.stock}" th:value="${cart.quantity}" onchange="updateQty(this)">
+                            <div th:if="*{cart.product.stock < 11}">
+                                <span th:text="*{cart.product.stock} + ' unit(s) left'" class="text-danger fw-light"></span>
+                            </div>
                             <input type="hidden" class="form-control" name="unit_price" th:value="${cart.unitPrice}">
                             <button type="submit" hidden></button>  
                         </form>

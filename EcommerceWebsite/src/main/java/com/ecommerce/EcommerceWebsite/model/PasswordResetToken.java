@@ -1,18 +1,10 @@
 package com.ecommerce.EcommerceWebsite.model;
 
-import java.time.LocalDateTime;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -29,7 +21,7 @@ public class PasswordResetToken {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
-    public PasswordResetToken(String token,LocalDateTime localDateTime, User user) {
+    public PasswordResetToken(String token, LocalDateTime localDateTime, User user) {
         this.token = token;
         this.expiryDateTime = localDateTime;
         this.user = user;

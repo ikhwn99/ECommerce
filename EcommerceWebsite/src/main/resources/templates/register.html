@@ -1,78 +1,234 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{base::layout(~{::section})}">
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Insert title here</title>
-</head>
-<body>
-<section>
-    <div class="container mt-5 p-5">
-        <div class="row">
-            <div class="col-md-5 p-5">
-                <img alt="" src="img/ecom.png" width="100%" height="400px">
-            </div>
-            <div class="col-md-7 p-2">
-                <div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
-                    <div class="card-header text-center">
-                        <p class="fs-4 text-center">Register</p>
-                        <th:block th:if="${session.succMsg}">
-                            <p class="text-success fw-bold">[[${session.succMsg}]]</p>
-                            <th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
-                        </th:block>
+<!-- <!DOCTYPE html>
+<html>
 
-                        <th:block th:if="${session.errorMsg}">
-                            <p class="text-danger fw-bold">[[${session.errorMsg}]]</p>
-                            <th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
-                        </th:block>
-                    </div>
-                    <div class="card-body">
-                        <form th:action="@{/register}" th:object="${user}" method="post">
-                            <div class="row">
-                                <div class="col">
-                                    <label class="form-label">Full Name</label> <input required
-                                                                                       class="form-control" name="name" type="text">
+<head>
+ <meta charset="UTF-8">
+ <title>Registration</title>
+ <style>
+  body {
+   font-family: 'Arial', sans-serif;
+   margin: 0;
+   padding: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+   background-color: #f4f4f4;
+  }
+
+  .form-container {
+   background-color: #fff;
+   width: 400px;
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  h2 {
+   color: #5e057e;
+   text-align: center;
+   margin-bottom: 20px;
+  }
+
+  label {
+   display: block;
+   margin-bottom: 8px;
+   color: #5e057e;
+  }
+
+  input {
+   width: 100%;
+   padding: 8px;
+   margin-bottom: 16px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   box-sizing: border-box;
+  }
+
+  button {
+   background-color: #5e057e;
+   color: #fff;
+   padding: 10px 20px;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+   font-weight: bold;
+   transition: background-color 0.3s;
+  }
+
+  button:hover {
+   background-color: #299d00;
+  }
+
+  .form-footer {
+   text-align: center;
+   margin-top: 20px;
+   color: #888;
+  }
+
+  .success-message {
+   background-color: #5e057e;
+   color: #fff;
+   padding: 10px;
+   border-radius: 3px;
+   text-align: center;
+  }
+ </style>
+</head>
+
+<body>
+ <div class="form-container">
+
+  <div th:if="${param.success}">
+   <div class="success-message">
+    <p>Registration Successful!</p>
+   </div>
+  </div>
+
+  <h2>Registration</h2>
+  <form th:action="@{/register}" method="post" role="form" th:object="${user}">
+   <label for="fullname">FullName:</label>
+   <input th:field="*{fullname}" type="text" id="fullname" name="fullname" placeholder="Enter your FullName"
+    required>
+
+   <label for="username">Username:</label>
+   <input th:field="*{username}" type="text" id="username" name="username" placeholder="Enter your Username"
+    required>
+
+   <label for="password">Password:</label>
+   <input th:field="*{password}" type="password" id="password" name="password"
+    placeholder="Enter your Password" required>
+
+   <button type="submit">Register</button>
+  </form>
+  <div>
+   <span th:if="${Userexist}" style="color: red;">Username is Taken</span>
+  </div>
+  <div>
+   <span class="form-footer">Already have an account? <a th:href="@{/login1}">Login</a>here.</span>
+  </div>
+ </div>
+</body>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+
+    <style>
+        .btn-chocolate {
+            background-color: #3d2b1f; /* Chocolate color */
+            border-color: #3d2b1f;
+            color: white; /* Text color */
+        }
+        .btn-chocolate:hover {
+        background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="container mt-5 p-5">
+            <div class="row">
+                <div class="col-md-5 p-5">
+                    <img alt="" src="img/ecom.png" width="100%" height="400px">
+                </div>
+                <div class="col-md-7 p-2">
+                    <div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
+                        <div class="card-header text-center">
+                            <p class="fs-4 text-center">Register</p>
+                            <th:block th:if="${session.succMsg}">
+                                <p class="text-success fw-bold">[[${session.succMsg}]]</p>
+                                <th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+                            </th:block>
+
+                            <th:block th:if="${session.errorMsg}">
+                                <p class="text-danger fw-bold">[[${session.errorMsg}]]</p>
+                                <th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+                            </th:block>
+                        </div>
+                        <div class="card-body">
+                            <form th:action="@{/register}" enctype="multipart/form-data" method="post" role="form" th:object="${user}">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label class="form-label" for="fullname">Full Name</label> <input required th:field="*{fullname}" class="form-control" name="fullname" type="text">
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label" for="phone">Mobile Number</label>
+                                        <input required th:field="*{phone}" class="form-control" name="phone" type="tel" pattern="01[1-9][0-9]{6,7}" placeholder="01">
+                                    </div>
+
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Email</label> <input required
-                                                                                   class="form-control" name="email" type="email">
-                                </div>
-                                <div class="col">
-                                    <label class="form-label">Mobile Number</label> <input
-                                        required class="form-control" name="phone"
-                                        type="number">
+                                    <label class="form-label" for="email">Email</label> <input required th:field="*{email}" class="form-control" name="email" type="text" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+                                    <label class="form-label" for="username">Username</label> <input required th:field="*{username}" class="form-control" name="username" type="text" pattern=".{7,}">
                                 </div>
 
-                            </div>
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <label class="form-label" for="address">Address</label> <input required th:field="*{address}" class="form-control"
+                                            name="address" type="text">
+                                    </div>
 
-                            <div class="row">
-                                <div class="col">
-                                    <label class="form-label">Address</label> <input required
-                                                                                     class="form-control" name="address" type="text">
+                                    <!-- <div class="col">
+                                        <label class="form-label">City</label> <input required class="form-control"
+                                            name="city" type="text">
+                                    </div> -->
+
                                 </div>
 
-                            </div>
+                                <!-- <div class="row mb-2">
+                                    <div class="col">
+                                        <label class="form-label">State</label> <input required class="form-control"
+                                            name="state" type="text">
+                                    </div> -->
 
-                                <div class="col">
-                                    <label class="form-label">Password</label> <input required
-                                                                                      class="form-control" name="password" type="password">
+                                    <!-- <div class="col">
+                                        <label class="form-label">Postcode</label> <input required class="form-control"
+                                            name="pincode" type="number">
+                                    </div> -->
+
+                                <!-- </div> -->
+
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <label class="form-label" for="password">Password</label> <input required th:field="*{password}" class="form-control" name="password" type="password">
+                                    </div>
+
+                                    <!-- <div class="col">
+                                        <label class="form-label">Confirm Password</label> <input required
+                                            class="form-control" name="cpassword" type="password">
+                                    </div> -->
+
                                 </div>
-                            <button type="submit"
-                                    class="btn bg-primary text-white col-md-12">Register</button>
-                        </form>
-                    </div>
 
-                    <div class="card-footer text-center">
+                                <!-- <div class="mb-3">
+                                    <label class="form-label">Profile Image</label> <input class="form-control"
+                                        name="img" type="file">
+                                </div> -->
 
-                        have an account ? <a href="/login" class="text-decoration-none">Login
-                    </a>
+                                <button type="submit" class="btn-chocolate text-white col-md-12">Register</button>
+                            </form>
+                        </div>
+
+                        <div class="card-footer text-center">
+
+                            Have an account? <a th:href="@{/login}" class="text-decoration-none">Login
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-</section>
+    </section>
 </body>
+
 </html>

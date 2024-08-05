@@ -1,13 +1,108 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Product</title>
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        .btn-chocolate1 {
+            background-color: #3d2b1f; /* Chocolate color */
+            border-color: #3d2b1f;
+            color: white; /* Text color */
+        }
+        .btn-chocolate1:hover {
+        background-color: green;
+        }
+    </style>
 </head>
 
 <body>
+    <!-- Start Navbar -->
+    <!-- Start Navbar -->
+    <!--    <nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-dark">-->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark navbar-chocolate">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><i class="fa-solid fa-shopping-bag">&nbsp;</i>BEAUTY DECK</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/product">Products</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu">
+				<li><a class="dropdown-item" href="/product?category=Supplemen%20Dalaman">Supplemen Dalaman</a></li>
+				<li><a class="dropdown-item" href="/product?category=Minuman%20Berkhasiat">Minuman Berkhasiat</a></li>
+				<li><a class="dropdown-item" href="/product?category=Skincare">Skincare</a></li>
+				<li><a class="dropdown-item" href="/product?category=Bodycare">Bodycare</a></li>
+				<li><a class="dropdown-item" href="/product?category=Aromaterapi">Aromaterapi</a></li>
+				<li><a class="dropdown-item" href="/product?category=Rumah%20Hutan">Rumah Hutan</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- If the user already logged in -->
+				<ul class="navbar-nav ms-auto mb-2 mb-lg-0" th:if="${userdetail}">
+					<li class="nav-item d-flex align-items-center mx-5">
+						<span class="text-white" th:text="'Hi, ' + ${userdetail.fullname}"></span>
+					</li>
+					<li class="nav-item mx-2">
+						<a class="nav-link active ms-2" aria-current="page" th:href="@{/cart}">
+							<i class="fa-solid fa-cart-shopping me-1"></i>My Cart
+                            <span th:text="*{carts_length}" class="badge text-dark" style="background-color: white;"></span></a>
+					</li>
+					<li class="nav-item mx-2">
+						<a class="nav-link active" aria-current="page" th:href="@{/my-orders}">
+							<i class="fa-solid fa-bag-shopping me-1"></i>My Orders
+						</a>
+					</li>
+					<li class="nav-item d-flex align-items-center mx-2">
+						<a class="text-white text-decoration-none" th:href="@{/logout}">
+							<i class="fa-solid fa-sign-out"></i>
+						</a>
+					</li> 
+				</ul>
+
+				<!-- If user is not logged in -->
+				<ul class="navbar-nav ms-auto mb-2 mb-lg-0" th:unless="${userdetail}">
+					<li class="nav-item d-flex align-items-center mx-5">
+						<span class="text-white">Welcome guest!</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/login}"><i
+								class="fa-solid fa-right-to-bracket">&nbsp;</i>LOGIN</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/register}"> | </a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/register}">REGISTER</a>
+					</li>
+				</ul>
+
+            </div>
+        </div>
+    </nav>
+
     <section>
         <div class="container card-sh" style="margin-top: 70px; margin-bottom: 100px;">
 
@@ -21,36 +116,33 @@
 
                     <div class="col-md-6">
 
-                        <p class="fs-3">[[${product.title}]]</p>
+                        <p class="fs-3" th:text="${product.title}"></p>
                         <p>
-                            <span class="fw-bold">Description : </span><br>[[${product.description}]]
+                            <span class="fw-bold">Description : </span><br>
+                            <span th:text="${product.description}"></span>
                         </p>
                         <p>
                             <span class="fw-bold"> Product Details: </span> <br> Status
                             :
-                            <th:block th:if="${product.stock>0}">
-                                <span class="badge bg-success">Available</span>
-                            </th:block>
+                            <span class="badge bg-success" th:text="${product.is_active} == 1 ? 'Available' : 'Not Available'"></span>
 
-                            <th:block th:unless="${product.stock>0}">
-                                <span class="badge bg-warning">out of stock</span>
-                            </th:block>
+                            <span class="badge bg-warning" th:text="${product.stock} < 0 ? 'Out of Stock' : ''"></span>
+
+                            <span th:if="${product.stock < 11}">
+                                <span th:text="${product.stock} + ' unit(s) left'" class="text-danger"></span>
+                            </span>
 
 
-                            <br> Category: [[${product.category}]]<br> Policy : 7
+                            <br> Category: <span th:text="${product.category}"></span><br> Policy : 7
                             Days Replacement & Return
                         </p>
                         <p class="fs-5 fw-bold">
-                            Price :&nbsp; &nbsp;RM
-                            [[${#numbers.formatDecimal(product.discount_price, 1, 'COMMA', 2, 'POINT')}]] 
-                            <th:block th:if="${product.discount>0}">
-                                <span
-                                class="fs-6 text-decoration-line-through text-secondary">RM[[${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}]]</span>
-                            <span class="fs-6  text-success">[[${product.discount}]]%
-                                off</span>
-                            </th:block>
-
+                            Price : <span style="font-size: larger; font-weight: bold;">RM</span>
+                            <span class="fs-5 fw-bold" th:text="${#numbers.formatDecimal(product.discount_price, 0, 'COMMA', 2, 'POINT')}"></span>
+                            <span class="fs-6 text-decoration-line-through text-secondary" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}"></span>
+                            <span class="fs-6  text-success" th:text="${product.discount + '% off'}"></span>
                         </p>
+
                         <div class="row">
                             <div class="col-md-4 text-success text-center p-2">
                                 <i class="fas fa-money-bill-wave fa-2x"></i>
@@ -65,7 +157,28 @@
                                 <p>Free Shipping</p>
                             </div>
                         </div>
-                        <a href="#" class="btn btn-danger col-md-12">Add To Cart</a>
+
+                        <form th:if="${userdetail != null}" th:action="@{/cart}" th:object="${product}" method="POST">
+                        <!-- <div th:object="${product}"> -->
+                            <input type="hidden" name="user_id" th:if="${userdetail != null}" th:value="${userdetail.id}">
+                            <input type="hidden" name="product_id" th:value="*{id}">
+                            <input type="hidden" name="product_name" th:value="*{title}">
+                            <input type="hidden" name="price" th:value="*{discount_price}">
+                            <input type="hidden" name="price" th:value="*{stock}">
+                            <!-- <input type="hidden" name="created_at" th:value="2024-07-31 10:00:00"> -->
+                            
+                            <div class="d-flex justify-content-between">
+                                
+                                <div class="col-md-4">
+                                    <input type="number" class="form-control" name="quantity" id="" min="1" th:max="*{stock}" value="1">
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- <a th:href="@{/cart}" class="btn btn-danger w-100">Add To Cart</a> -->
+                                    <button type="submit" class="btn btn-chocolate1 w-100" t>Add to cart</button>
+                                </div>
+                            </div>
+                        <!-- </div> -->
+                        </form>
                         <!-- <a href="#" class="btn text-white btn-warning col-md-12">Out
                             of Stock</a> -->
 
@@ -74,6 +187,38 @@
             </div>
         </div>
     </section>
+
+    <!-- Start Footer -->
+    <!--    <div class="container-fluid p-1 bg-primary text-center text-white" style="margin-top: 100px">-->
+    <!--        <p>Beauty Shoppe</p>-->
+    <!--    </div>-->
+    <div class="container-fluid p-4 text-center text-white navbar-chocolate mt-auto" style="margin-top: 100px">
+        <div class="row">
+            <div class="col">
+                <a href="https://www.instagram.com/yourprofile" class="text-white text-decoration-none">
+                    <i class="fa-brands fa-instagram"></i> Instagram
+                </a>
+            </div>
+            <div class="col">
+                <a href="https://www.facebook.com/yourprofile" class="text-white text-decoration-none">
+                    <i class="fa-brands fa-facebook"></i> Facebook
+                </a>
+            </div>
+            <div class="col">
+                <a href="https://www.twitter.com/yourprofile" class="text-white text-decoration-none">
+                    <i class="fa-brands fa-twitter"></i> Twitter
+                </a>
+            </div>
+        </div>
+        <!--        <p><i class="fa-solid fa-shopping-bag">BEAUTY DECK</p>-->
+        <p><i class="fa-solid fa-shopping-bag"></i> BEAUTY DECK</p>
+
+    </div>
+    <!-- End Footer  -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>

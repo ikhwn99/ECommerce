@@ -39,6 +39,13 @@ public class CartController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Display the cart for the authenticated user.
+     *
+     * @param model     the model to hold attributes for the view
+     * @param principal the principal representing the authenticated user
+     * @return the name of the view to display the cart
+     */
     // Display cart by user id
     @GetMapping("cart")
     public String displayCartByUser(Model model, Principal principal) {
@@ -62,7 +69,18 @@ public class CartController {
         return "cart";
     }
 
-    // Insert cart into cart table in database
+    /**
+     * Save a cart item to the cart table in the database.
+     *
+     * @param cart       the cart item to be saved
+     * @param principal  the principal representing the authenticated user
+     * @param userId     the ID of the user
+     * @param productId  the ID of the product
+     * @param price      the price of the product
+     * @param quantity   the quantity of the product
+     * @param name       the name of the product
+     * @return a redirect to the cart page
+     */
     @PostMapping("/cart")
     public String saveCart(@ModelAttribute("cart") Cart cart, Principal principal, @RequestParam("user_id") Long userId, @RequestParam("product_id") Long productId, @RequestParam("price") double price, @RequestParam("quantity") int quantity, @RequestParam("product_name") String name) {
         String username = principal.getName();
@@ -82,7 +100,17 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    // Update quantity product into cart table in database
+    /**
+     * Update the quantity of a product in the cart table in the database.
+     *
+     * @param cart       the cart item to be updated
+     * @param principal  the principal representing the authenticated user
+     * @param userId     the ID of the user
+     * @param productId  the ID of the product
+     * @param quantity   the new quantity of the product
+     * @param unitPrice  the unit price of the product
+     * @return a redirect to the cart page
+     */
     @PostMapping("cart/updateQty") 
     public String updateQuantityInCart(@ModelAttribute("cart") Cart cart, Principal principal, @RequestParam("user_id") Long userId, @RequestParam("product_id") Long productId, @RequestParam("quantity") int quantity, @RequestParam("unit_price") double unitPrice) {
         String username = principal.getName();
@@ -100,7 +128,12 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    // Delete cart by cart id
+    /**
+     * Delete a cart item by its ID.
+     *
+     * @param cartItemId the ID of the cart item to be deleted
+     * @return a redirect to the cart page
+     */
     @PostMapping("/cart/delete")
     public String deleteCartItem(@RequestParam("cartItemId") Long cartItemId) {
         cartService.deleteCartById(cartItemId);

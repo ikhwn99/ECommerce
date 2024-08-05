@@ -13,6 +13,7 @@ public class CartService {
     @Autowired
     private CartRepository cartRepository;
 
+    // Method to update the cart
     public void updateCart(Cart cart) {
         System.out.println("Saving Cart: " + cart);
         this.cartRepository.save(cart);
@@ -23,7 +24,7 @@ public class CartService {
         return cartRepository.findByUserId(userId);
     }
 
-    // Add product to cart
+    // Method to add a product to the cart
     public void addToCart(Cart cart) {
         Optional<Cart> existingCartOpt = cartRepository.findByUserAndProduct(cart.getUser(), cart.getProduct());
         
@@ -37,7 +38,7 @@ public class CartService {
         }
     }
 
-    // Update quantity product in cart
+    // Method to update the quantity of a product in the cart
     public void updateQuantity(Cart cart) {
         Optional<Cart> existingCartOpt = cartRepository.findByUserAndProduct(cart.getUser(), cart.getProduct());
 
@@ -51,7 +52,7 @@ public class CartService {
         }
     }
 
-    // Get cart details by cart id
+    // Method to get the cart details by cart ID
     public Cart getCartById(Long id) {
         Optional <Cart> optional = cartRepository.findById(id);
         Cart cart = null;

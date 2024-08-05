@@ -117,15 +117,15 @@
                     <td th:text="${cart.productName}"></td>
                     <td>
                         <form th:action="@{/cart/updateQty}" method="post">
-                            <input type="hidden" class="form-control" name="product_id" id="" th:value="${cart.product.id}">
-                            <input type="hidden" class="form-control" name="user_id" id="" th:value="${userdetail.id}">
-                            <input type="number" class="form-control" name="quantity" id="" th:value="${cart.quantity}" onchange="updateQty(this)">  
-                            <input type="hidden" class="form-control" name="unit_price" id="" th:value="${cart.unitPrice}">  
+                            <input type="hidden" class="form-control" name="product_id" th:value="${cart.product.id}">
+                            <input type="hidden" class="form-control" name="user_id" th:value="${userdetail.id}">
+                            <input type="number" class="form-control" name="quantity" th:value="${cart.quantity}" onchange="updateQty(this)">
+                            <input type="hidden" class="form-control" name="unit_price" th:value="${cart.unitPrice}">
                             <button type="submit" hidden></button>  
                         </form>
                     </td>
-                    <td th:text="${cart.unitPrice}"></td>
-                    <td th:text="${cart.price}"></td>
+
+                   
 <!--                    <td>-->
 <!--                        <form th:action="@{/cart/delete}" method="post" style="display:inline;">-->
 <!--                            <input type="hidden" name="cartItemId" th:value="${cart.id}" />-->
@@ -134,6 +134,10 @@
 <!--                            </button>-->
 <!--                        </form>-->
 <!--                    </td>-->
+
+                    <td th:text="${#numbers.formatDecimal(cart.unitPrice, 0, 'COMMA', 2, 'POINT')}"></td>
+                    <td th:text="${#numbers.formatDecimal(cart.price, 0, 'COMMA', 2, 'POINT')}"></td>
+
                     <td>
                         <form th:action="@{/cart/delete}" method="post" style="display:inline;">
                             <input type="hidden" name="cartItemId" th:value="${cart.id}" />

@@ -1,6 +1,7 @@
 package com.ecommerce.EcommerceWebsite.controller;
 
 import java.security.Principal;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +82,13 @@ public class OrderController {
         Long userId = customUserDetails.getId();
 
         List<Order> orders = orderService.getOrderByUserId(userId);
+
+        // Format the dates
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+        for (Order order : orders) {
+            order.setFormattedDate(order.getCreatedAt().format(formatter));
+        }
+
         model.addAttribute("orders", orders);
 
         return "my_orders";

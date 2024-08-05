@@ -2,6 +2,7 @@ package com.ecommerce.EcommerceWebsite.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@ComponentScan
 public class SecurityConfig {
     @Autowired
     CustomUserDetailsService customUserDetailsService;
@@ -26,9 +28,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(requests -> requests
-                    .requestMatchers("/static/**","/","/index","/home", "/login", "/base", "/register", "/product","/view_product","/forgotpassword", "/resetpassword").permitAll()
+                    .requestMatchers("/css/**", "/js/**", "/img/**","/","/index","/home", "/login", "/base", "/register", "/product","/view_product","/forgotpassword", "/resetpassword").permitAll()
                     .requestMatchers("checkout","my_orders", "cart","my_orders_temp","order","orderConfirmation").authenticated()
-                    .anyRequest().permitAll()
+                    .anyRequest().authenticated()
             )
             .formLogin(
                 login -> login.loginPage("/login")

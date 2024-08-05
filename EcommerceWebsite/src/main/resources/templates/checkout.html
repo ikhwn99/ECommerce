@@ -100,7 +100,7 @@
 
                             <!-- Total Price for all items in cart -->
                             <div class="text-end px-3">
-                                <h5 th:text="'Total: ' + ${totalPrice}"></h5>
+                                <h5 th:text="'Total: RM' + ${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 2, 'POINT')}"></h5>
                             </div>
 
                         </div>

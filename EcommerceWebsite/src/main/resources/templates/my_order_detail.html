@@ -120,20 +120,27 @@
                 </tr>
             </thead>
             <tbody class="align-middle">
+                <!-- Row(s) for each item -->
                 <tr th:each="orderItem : ${orderItems}" class="py-2">
+                    <!-- Product image -->
                     <td class="col-md-1">
                         <span th:text="${orderItem.id}" hidden></span>
                         <img th:src="@{'/img/obsb/' + ${orderItem.product.image}}" alt="" class="w-100">
                     </td>
+                    <!-- Product Name, Category and Description -->
                     <td class="col-md-6">
                         <h5 th:text="${orderItem.product.title}"></h5>
                         <h6 th:text="${orderItem.product.category}"></h6>
                         <span th:text="${orderItem.product.description}"></span>
                     </td>
+                    <!-- Quantity of items -->
                     <td th:text="'x'+${orderItem.quantity}" class="text-center"></td>
+                    <!-- Unit Price -->
                     <td th:text="'RM ' + ${#numbers.formatDecimal(orderItem.unitPrice, 0, 'COMMA', 2, 'POINT')}" class="text-end"></td>
+                    <!-- Total Price -->
                     <td th:text="'RM ' + ${#numbers.formatDecimal(orderItem.totalPrice, 0, 'COMMA', 2, 'POINT')}" class="text-end"></td>
                 </tr>
+                <!-- Row Total price -->
                 <tr style="background-color: #69584d;">
                     <td colspan="4" class="text-end">
                         <h5>Total</h5>

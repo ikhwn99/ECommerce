@@ -27,9 +27,6 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
-    private OrderItemRepository orderItemRepository;
-
-    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -55,12 +52,11 @@ public class OrderService {
 
         // Fetch the user entity
         User user = userRepository.findById(userId)
-                                  .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                                  .orElseThrow(
+                                      () -> new IllegalArgumentException("User not found")
+                                    );
 
         order.setUser(user);
-
-        // Product product = productRepository.findById(productId)
-        //     .orElseThrow(() -> new RuntimeException("Product not found for id: " + productId));
 
         double totalPrice = 0;
 
@@ -85,9 +81,10 @@ public class OrderService {
         
         // Save the order and order items
         orderRepository.save(order);
-        cartService.clearCartForUser(userId); // Optionally clear the cart after order creation
+        cartService.clearCartForUser(userId);
     }
 
+    // Get order detail by order id
     public Order getOrderById(Long orderId) {
         Optional <Order> optional = orderRepository.findById(orderId);
         Order order = null;
@@ -99,6 +96,7 @@ public class OrderService {
         return order;
     }
 
+    // Get order detail by user id
     public List<Order> getOrderByUserId(Long userId) {
         return orderRepository.findByUserId(userId);
     }

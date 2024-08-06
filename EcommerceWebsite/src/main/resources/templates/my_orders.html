@@ -94,7 +94,6 @@
         <table class="table table-bordered table-striped align-middle">
             <thead>
                 <tr class="text-center">
-                    <!-- <th scope="col">Order ID</th> -->
                     <th scope="col">Date</th>
                     <th scope="col">Items</th>
                     <th scope="col">Total Price</th>
@@ -104,10 +103,10 @@
             </thead>
             <tbody>
                 <tr th:each="order : ${orders}" class="text-center">
-                    <!-- <td th:text="${order.id}"></td> -->
                     <span th:text="${order.id}" hidden></span>
+                    <!-- Column Date -->
                     <td th:text="${order.formattedDate}"></td>
-                    <!-- <td th:text="${#numbers.formatDecimal(order.totalPrice, 2, 'COMMA', 'POINT')}"></td> -->
+                    <!-- Column Items -->
                     <td >
                         <ul>
                             <li th:each="orderItem : ${orderItemsMap[order.id]}" class="d-flex justify-content-between px-2">
@@ -116,9 +115,11 @@
                             </li>
                         </ul>
                     </td>
-                    
+                    <!-- Column Total Price -->
                     <td th:text="'RM ' + ${#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 2, 'POINT')}"></td>
+                    <!-- Column Order Status -->
                     <td th:text="${order.status}"></td>
+                    <!-- Column Action -->
                     <td>
                         <a th:href="@{/my-order-details/{orderId}(orderId=${order.id})}" class="btn btn-chocolate1 btn-round">View Details</a>
                     </td>

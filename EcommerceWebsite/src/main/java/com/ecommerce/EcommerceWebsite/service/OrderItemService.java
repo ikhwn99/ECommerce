@@ -13,6 +13,7 @@ public class OrderItemService {
     @Autowired
     private OrderItemRepository orderItemRepository;
     
+    // Get a list of order item by order id
     public List<OrderItem> getOrderItemByOrderId(Long orderId) {
         return orderItemRepository.findOrderItemByOrderId(orderId);
     }

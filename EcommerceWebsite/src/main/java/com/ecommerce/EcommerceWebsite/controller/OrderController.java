@@ -92,35 +92,38 @@ public class OrderController {
         UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
         model.addAttribute("userdetail", userDetails);
 
+        // Check if the user is authenticated. If the user is not authenticated, it will throws an exception to ensure that only authenticated users can access the checkout page
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new UsernameNotFoundException("User not authenticated");
         }
 
+        // Get the userId by 'CustomeUserDetails' from the 'Authentication' object
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         Long userId = customUserDetails.getId();
 
+        // Get the list of order using getOrderByUserId()
         List<Order> orders = orderService.getOrderByUserId(userId);
 
-        // Changes the date into format dd MMMM yyyy)
+        // Changes the date into format dd MMMM yyyy
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
         for (Order order : orders) {
             order.setFormattedDate(order.getCreatedAt().format(formatter));
         }
+        model.addAttribute("orders", orders);
 
         // Create a map to store order items by order ID
+        // For each order, the method retrieves the list of order items and populates the map with the order ID as the key and the list of order items as the value.
         Map<Long, List<OrderItem>> orderItemsMap = new HashMap<>();
         for (Order order : orders) {
             Long orderId = order.getId();
             List<OrderItem> orderItems = orderItemService.getOrderItemByOrderId(orderId);
             orderItemsMap.put(orderId, orderItems);
         }
-
-        model.addAttribute("orders", orders);
         model.addAttribute("orderItemsMap", orderItemsMap);
 
+        // Get the cart detail based on user id
         List<Cart> carts = cartService.getCartByUserId(userId);
-
         model.addAttribute("carts_length", carts.size());
 
         return "my_orders";

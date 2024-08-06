@@ -1,5 +1,5 @@
 Intro..
-Our project is an e-commerce website designed to provide customers with a seamless and enjoyable shopping experience for body care, skincare, and aromatherapy products. The primary objective of the project is to create an online platform where users can browse, select, and purchase a wide range of self-care and wellness products. This members responsible for the completion of this project are :
+Our project is an e-commerce website designed to provide customers with a seamless and enjoyable shopping experience for body care, skincare, and aromatherapy products. The primary objective of the project is to create an online platform where users can browse, select, and purchase a wide range of self-care and wellness products. This members responsible for the completion of this project are : <br />
 
 Ikhwan Hakimi (Login and Security)
 Muhammad Abu Laith(Product List and View)

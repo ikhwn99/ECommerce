@@ -35,3 +35,12 @@ body {
     border-color: 3;
 
 }
+
+.form-inline {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+}
+
+.form-select {
+    margin-right: 10px; /* Add space between select elements */
+}

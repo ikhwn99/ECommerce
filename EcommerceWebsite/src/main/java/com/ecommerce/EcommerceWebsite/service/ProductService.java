@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -49,8 +52,18 @@ public class ProductService {
 		return products;
 	}
 
-	public List<Product> searchProduct(String ch) {
-		return productRepository.findByTitleContainingIgnoreCaseOrCategoryContainingIgnoreCase(ch, ch);
-	}
+//	public List<Product> searchProduct(String ch) {
+//		return productRepository.findByTitleContainingIgnoreCaseOrCategoryContainingIgnoreCase(ch, ch);
+//	}
 
+//    public List<Product> searchProduct(String ch) {
+//		return productRepository.searchProducts(ch);
+//	}
+public Page<Product> searchPaginated(String searchTerm, Pageable pageable) {
+    return productRepository.searchProduct(searchTerm, pageable);
+}
+
+    public Page<Product> findPaginated(Pageable pageable) {
+        return productRepository.findAll(pageable);
+    }
 }

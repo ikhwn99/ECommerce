@@ -110,9 +110,9 @@
 		<div class="container-fluid bg-dark-chocolate p-5 mt-5">
 			<div class="row">
 				<div class="col-md-8 offset-md-2">
-					<form th:action="${userdetail != null ? '/search' : '/searchunauthenticated'}" method="get">
+					<form th:action="${product}" method="get">
 						<div class="input-group">
-							<input type="text" class="form-control" name="ch">
+							<input type="text" class="form-control" name="term">
 							<button class="btn-chocolate1 ms-3 col-md-2"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
 						</div>
 					</form>
@@ -144,18 +144,34 @@
 						<div class="card-body">
 							<p class="fs-3 text-center">Products</p>
 							<div class="row">
-								<div class="col-md-3 mb-3"  th:each="product : ${listProducts}">
+								<!-- Sort Controls -->
+								<div class="col-md-12 mb-3">
+									<div class="d-flex justify-content-center">
+										<form method="get" action="#" class="form-inline d-flex">
+											<select name="sortField" class="form-select" onchange="this.form.submit()">
+												<option value="title" th:selected="${sortField == 'title'}">Title</option>
+												<option value="price" th:selected="${sortField == 'price'}">Price</option>
+												<option value="discount" th:selected="${sortField == 'discount'}">Discount</option>
+											</select>
+											<select name="sortDir" class="form-select ms-2" onchange="this.form.submit()">
+												<option value="asc" th:selected="${sortDir == 'asc'}">Ascending</option>
+												<option value="desc" th:selected="${sortDir == 'desc'}">Descending</option>
+											</select>
+										</form>
+									</div>
+								</div>
+								<div class="col-md-3 mb-3" th:each="product : ${listProducts}">
 									<div class="card">
 										<div class="card-body text-center">
-											<img alt="" th:src="@{'/img/obsb/'+${product.image}}" width="100%", height="150px">
+											<img alt="" th:src="@{'/img/obsb/'+${product.image}}" width="100%" height="150px">
 											<p class="fs-5 text-center" th:text="${product.title}"></p>
 											<div class="row text-center">
 												<span class="fs-6 fw-bold" th:text="'RM ' + ${#numbers.formatDecimal(product.discount_price, 0, 'COMMA', 2, 'POINT')}"></span>
-												<th:block th:if="${product.discount>0}">
+												<th:block th:if="${product.discount > 0}">
 													<span class="text-decoration-line-through text-secondary" th:text="'RM ' + ${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}"></span>
 													<p class="fs-6 text-success" th:text="${product.discount} + '% off'"></p>
 												</th:block>
-												<th:block th:unless="${product.discount>0}">
+												<th:block th:unless="${product.discount > 0}">
 													<span class="fs-6 text-light">&nbsp;</span>
 													<p class="fs-6 text-light">&nbsp;</p>
 												</th:block>
@@ -164,67 +180,25 @@
 										</div>
 									</div>
 								</div>
-								<!-- WILL DELETE FOR BACK END -->
-								<!-- <div class="col-md-3">
-									<div class="card">
-										<div class="card-body text-center">
-											<img alt="" src="/img/obsb/1.png" width="100%", height="150px">
-											<p class="fs-5 text-center">Laptop</p>
-											<div class="row text-center">
-												<p class="fs-6 fw-bold">RM500
-													<span class="fs-6 text-success">20% off</span>
-												</p>
-												<a href="#" class="btn btn-primary col-md-6 offset-md-3">View Details</a>
-											</div>
-										</div>
-									</div>
+							</div>
+
+							<!-- Pagination Controls -->
+							<div class="row">
+								<div class="col-md-12 d-flex justify-content-center">
+									<ul class="pagination">
+										<li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+											<a class="page-link" th:href="@{/product(page=${currentPage - 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Previous</a>
+										</li>
+										<li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active'">
+											<a class="page-link" th:href="@{/product(page=${i}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}" th:text="${i}"></a>
+										</li>
+										<li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+											<a class="page-link" th:href="@{/product(page=${currentPage + 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir})}">Next</a>
+										</li>
+									</ul>
 								</div>
-								<div class="col-md-3">
-									<div class="card">
-										<div class="card-body text-center">
-											<img alt="" src="/img/obsb/1.png" width="100%", height="150px">
-											<p class="fs-5 text-center">Laptop</p>
-											<div class="row text-center">
-												<p class="fs-6 fw-bold">RM500
-													<span class="fs-6 text-success">20% off</span>
-												</p>
-												<a href="#" class="btn btn-primary col-md-6 offset-md-3">View Details</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="card">
-										<div class="card-body text-center">
-											<img alt="" src="/img/obsb/1.png" width="100%", height="150px">
-											<p class="fs-5 text-center">Laptop</p>
-											<div class="row text-center">
-												<p class="fs-6 fw-bold">RM500
-													<span class="fs-6 text-success">20% off</span>
-												</p>
-												<a href="#" class="btn btn-primary col-md-6 offset-md-3">View Details</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="card">
-										<div class="card-body text-center">
-											<img alt="" src="/img/obsb/1.png" width="100%", height="150px">
-											<p class="fs-5 text-center">Laptop</p>
-											<div class="row text-center">
-												<p class="fs-6 fw-bold">RM500
-													<span class="fs-6 text-success">20% off</span>
-												</p>
-												<a href="#" class="btn btn-primary col-md-6 offset-md-3">View Details</a>
-											</div>
-										</div>
-									</div>
-								</div> -->
 							</div>
 						</div>
-
-
 					</div>
 				</div>
 			</div>

@@ -129,6 +129,7 @@ public class ProductController {
 
     @GetMapping("/product")
     public String listProducts(Principal principal,
+                               @RequestParam("category") Optional<String> category,
                                @RequestParam("term") Optional<String> term,
                                @RequestParam("page") Optional<Integer> page,
                                @RequestParam("size") Optional<Integer> size,
@@ -136,6 +137,7 @@ public class ProductController {
                                @RequestParam("sortDir") Optional<String> sortDir,
                                Model model) {
 
+        //hi message and cart number
         if(principal != null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
             model.addAttribute("userdetail", userDetails);
@@ -152,21 +154,29 @@ public class ProductController {
             model.addAttribute("carts_length", carts.size());
         } else model.addAttribute("userdetail", null);
 
+        String categorySelected = category.orElse("");
         String searchTerm = term.orElse("");
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
-        String currentSortField = sortField.orElse("title"); // Default sort field
-        String currentSortDir = sortDir.orElse("asc"); // Default sort direction
+        String currentSortField = sortField.orElse("title");
+        String currentSortDir = sortDir.orElse("asc");
+
         Page<Product> productPage = null;
 
-        if(!searchTerm.equals("")){
+        if(!searchTerm.isEmpty()){
             productPage = productService.searchPaginated(searchTerm,
                     PageRequest.of(currentPage - 1, pageSize, Sort.Direction.fromString(currentSortDir), currentSortField));
-        }else {
+        }else if(!categorySelected.isEmpty()){
+            productPage = productService.categoriesPaginated(categorySelected,
+                    PageRequest.of(currentPage - 1, pageSize, Sort.Direction.fromString(currentSortDir), currentSortField));
+        }else{
             productPage = productService.findPaginated(
                     PageRequest.of(currentPage - 1, pageSize, Sort.Direction.fromString(currentSortDir), currentSortField));
+
         }
 
+        model.addAttribute("category",categorySelected);
+        model.addAttribute("term",searchTerm);
         model.addAttribute("listProducts", productPage);
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalPages", productPage.getTotalPages());
@@ -177,11 +187,4 @@ public class ProductController {
 
         return "product";
     }
-
-    // @GetMapping("/deleteProduct/{id}")
-    // public String deleteProduct(@PathVariable(value = "id") long id) {
-
-    //     return "redirect:/product";
-    // }
-    
 }

@@ -6,9 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import com.ecommerce.EcommerceWebsite.model.Product;
 import com.ecommerce.EcommerceWebsite.repository.ProductRepository;
@@ -37,33 +35,22 @@ public class ProductService {
         return product;
     }
 
+
     public void deleteProductById(Long id) {
         this.productRepository.deleteById(id);
     }
 
-    public List<Product> getAllActiveProducts(String category) {
-		List<Product> products = null;
-		if (ObjectUtils.isEmpty(category)) {
-			products = productRepository.findAll();
-		} else {
-			products = productRepository.findByCategory(category);
-		}
 
-		return products;
+    public Page<Product> categoriesPaginated(String category, Pageable pageable) {
+        return productRepository.findByCategory(category, pageable);
 	}
 
-//	public List<Product> searchProduct(String ch) {
-//		return productRepository.findByTitleContainingIgnoreCaseOrCategoryContainingIgnoreCase(ch, ch);
-//	}
-
-//    public List<Product> searchProduct(String ch) {
-//		return productRepository.searchProducts(ch);
-//	}
-public Page<Product> searchPaginated(String searchTerm, Pageable pageable) {
-    return productRepository.searchProduct(searchTerm, pageable);
-}
+    public Page<Product> searchPaginated(String searchTerm, Pageable pageable) {
+        return productRepository.searchProduct(searchTerm, pageable);
+    }
 
     public Page<Product> findPaginated(Pageable pageable) {
         return productRepository.findAll(pageable);
     }
-}
+
+    }

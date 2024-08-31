@@ -143,38 +143,37 @@
                     <div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
                         <div class="card-header text-center">
                             <p class="fs-4 text-center">Register</p>
-                            <th:block th:if="${session.succMsg}">
-                                <p class="text-success fw-bold">[[${session.succMsg}]]</p>
-                                <th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+                            <th:block th:if="${succMsg}">
+                                <p class="text-success fw-bold">Success</p>
+                                <th:block th:text="${succMsg}"></th:block>
                             </th:block>
-
-                            <th:block th:if="${session.errorMsg}">
-                                <p class="text-danger fw-bold">[[${session.errorMsg}]]</p>
-                                <th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+                            <th:block th:if="${errorMsg}">
+                                <p class="text-danger fw-bold">ERROR</p>
+                                <th:block th:text="${errorMsg}"></th:block>
                             </th:block>
                         </div>
                         <div class="card-body">
                             <form th:action="@{/register}" enctype="multipart/form-data" method="post" role="form" th:object="${user}">
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <label class="form-label" for="fullname">Full Name</label> <input required th:field="*{fullname}" class="form-control" name="fullname" type="text">
+                                        <label class="form-label" for="fullname">Full Name</label> <input id="fullname" required th:field="*{fullname}" class="form-control" name="fullname" type="text">
                                     </div>
 
                                     <div class="col">
                                         <label class="form-label" for="phone">Mobile Number</label>
-                                        <input required th:field="*{phone}" class="form-control" name="phone" type="tel" pattern="01[1-9][0-9]{6,7}" placeholder="01">
+                                        <input id="phone" th:field="*{phone}" class="form-control" name="phone" type="tel" pattern="01[1-9][0-9]{6,7}" placeholder="01">
                                     </div>
 
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label" for="email">Email</label> <input required th:field="*{email}" class="form-control" name="email" type="text" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
-                                    <label class="form-label" for="username">Username</label> <input required th:field="*{username}" class="form-control" name="username" type="text" pattern=".{7,}">
+                                    <label class="form-label" for="email">Email</label> <input id="email" required th:field="*{email}" class="form-control" name="email" type="text" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+                                    <label class="form-label" for="username">Username</label> <input id="username" required th:field="*{username}" class="form-control" name="username" type="text" pattern=".{7,}">
                                 </div>
 
                                 <div class="row mb-2">
                                     <div class="col">
-                                        <label class="form-label" for="address">Address</label> <input required th:field="*{address}" class="form-control"
+                                        <label class="form-label" for="address">Address</label> <input id="address" required th:field="*{address}" class="form-control"
                                             name="address" type="text">
                                     </div>
 
@@ -200,7 +199,7 @@
 
                                 <div class="row mb-2">
                                     <div class="col">
-                                        <label class="form-label" for="password">Password</label> <input required th:field="*{password}" class="form-control" name="password" type="password">
+                                        <label class="form-label" for="password">Password</label> <input id="password" required th:field="*{password}" class="form-control" name="password" type="password">
                                     </div>
 
                                     <!-- <div class="col">

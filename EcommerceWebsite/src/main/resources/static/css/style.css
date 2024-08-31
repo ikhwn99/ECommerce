@@ -16,6 +16,15 @@
     background-color: #3d2b1f; /* Dark chocolate color */
 }
 
+.btn-chocolate1 {
+    background-color: #3d2b1f; /* Chocolate color */
+    border-color: #3d2b1f;
+    color: white; /* Text color */
+}
+.btn-chocolate1:hover {
+background-color: green;
+}
+
 html, body {
     height: 100%;
 }
@@ -43,4 +52,9 @@ body {
 
 .form-select {
     margin-right: 10px; /* Add space between select elements */
+}
+
+.wrap-at-word {
+    overflow-wrap: break-word; /* Allows the text to wrap at whole words */
+    word-break: normal; /* Ensures the default word-breaking behavior */
 }

@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  mysql-db:
+    image: mysql:latest
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: 67CHyOBFE9s98ET
+      MYSQL_DATABASE: ecommerce_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: wWopfqewMaoy1o2
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - ecommerce-network
+
+  ecommerce-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecommerce-app
+    ports:
+      - "8080:8080"
+    environment:
+      db_url: jdbc:mysql://mysql-db:3306/ecommerce_db
+      db_username: user
+      db_password: wWopfqewMaoy1o2
+    depends_on:
+      - mysql-db
+    networks:
+      - ecommerce-network
+
+networks:
+  ecommerce-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

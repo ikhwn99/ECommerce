@@ -21,7 +21,7 @@ FROM openjdk:21-jdk-slim
 
 # Install dockerize
 RUN apt-get update && apt-get install -y wget \
-  && wget -qO /usr/local/bin/dockerize https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64 \
+  && wget -qO /usr/local/bin/dockerize https://github.com/jwilder/dockerize/releases/download/v0.8.0/dockerize-linux-amd64-v0.8.0.tar.gz \
   && chmod +x /usr/local/bin/dockerize
 
 

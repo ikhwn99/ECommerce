@@ -59,9 +59,9 @@ public class CustomUserDetailsService implements UserDetailsService{
             msg.setFrom("ikhwnhkmi99@gmail.com");// input the senders email ID
             msg.setTo(user.getEmail());
 
-            msg.setSubject("Product Kecantikan");
+            msg.setSubject("Password Reset");
             msg.setText("Hello \n\n" + "Please click on this link to Reset your Password :" + resetLink + ". \n\n"
-                    + "Regards \n" + "Product Kecantikan Site");
+                    + "Regards \n" + "Beauty Deck Website");
 
             javaMailSender.send(msg);
 
@@ -89,7 +89,7 @@ public class CustomUserDetailsService implements UserDetailsService{
         String token = UUID.randomUUID().toString();
         generateOrReplaceResetToken(user, token);
         if (token != null) {
-            String endpointUrl = "http://localhost:8080/resetpassword";
+            String endpointUrl = "https://ecommerce-gtya.onrender.com/resetpassword";
             return endpointUrl + "/" + token;
         }
         return "";

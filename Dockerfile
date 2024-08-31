@@ -25,9 +25,15 @@ WORKDIR /app
 # Copy the packaged jar file from the build stage
 COPY --from=build /app/target/EcommerceWebsite-0.0.1-SNAPSHOT.jar app.jar
 
+# Copy the wait-for-it script
+COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
+
+# Make the wait-for-it script executable
+RUN chmod +x /usr/local/bin/wait-for-it.sh
+
 # Expose port 8080
 EXPOSE 8080
 
 # Run the jar file
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["/usr/local/bin/wait-for-it.sh", "mysql-db:3306", "--", "java", "-jar", "app.jar"]
 
